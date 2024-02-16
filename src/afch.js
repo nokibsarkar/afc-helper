@@ -9,7 +9,7 @@
 			// currently only the article submission script is running here.
 			// to be used when script(s) for other modules such as category and
 			// redirect requests are reintergrated into here.
-			if ( pageName !== 'Articles for creation/sandbox' ) {
+			if ( pageName !== 'তৈরীর জন্য নিবন্ধ/খেলাঘর' ) {
 				return;
 			}
 			break;
