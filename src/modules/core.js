@@ -152,23 +152,22 @@
 					// offer links for easy access.
 					} else {
 						$howToDisable = $( '<span>' )
-							.append( 'If you wish to disable the helper script, you will need to manually ' +
-								'remove it from your ' )
+							.append( 'আপনি যদি সাহায্যকারী স্ক্রিপ্টটি বন্ধ করতে চান, সেক্ষেত্রে আপনি নিজের হাতে আপনার ')
 							.append( AFCH.makeLinkElementToPage( 'Special:MyPage/common.js', 'common.js' ) )
-							.append( ' or your ' )
+							.append( ' অথবা ' )
 							.append( AFCH.makeLinkElementToPage( 'Special:MyPage/skin.js', 'skin.js' ) )
-							.append( 'page. ' );
+							.append( 'পাতা থেকে সরাতে হবে। ' );
 					}
 
 					// Finally, make and push the notification, then explode AFCH
 					mw.notify(
 						$( '<div>' )
-							.append( 'AFCH could not be loaded because "' + user + '" is not listed on ' )
+							.append( 'AFCH লোড করা যায় নি কারণ "' + user + '" ' )
 							.append( AFCH.makeLinkElementToPage( whitelist.rawTitle ) )
-							.append( '. You can request access to the AfC helper script there. ' )
+							.append( ' তালিকায় নেই। আপনি সেখানে এই সাহায্যকারী স্ক্রিপ্টের প্রবেশাধিকারের জন্য আবেদন করতে পারেন। ' )
 							.append( $howToDisable )
-							.append( 'If you have any questions or concerns, please ' )
-							.append( AFCH.makeLinkElementToPage( 'WT:AFCH', 'get in touch' ) )
+							.append( 'যদি কোনোরূপ প্রশ্ন কিংবা অভিযোগ থাকে, অনুগ্রহপূর্বক ' )
+							.append( AFCH.makeLinkElementToPage( 'WT:AFCH', 'যোগাযোগ করুন ' ) )
 							.append( '!' ),
 						{
 							title: 'AFCH error: user not listed',
@@ -224,16 +223,16 @@
 		 */
 		initFeedback: function ( $element, type, linkText ) {
 			var feedback = new mw.Feedback( {
-				title: new mw.Title( 'Wikipedia talk:WikiProject Articles for creation/Helper script' ),
+				title: new mw.Title( 'উইকিপিডিয়া আলাপ:WikiProject Articles for creation/Helper script' ),
 				bugsLink: 'https://en.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script&action=edit&section=new',
 				bugsListLink: 'https://en.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script'
 			} );
 			$( '<span>' )
-				.text( linkText || 'Give feedback!' )
+				.text( linkText || 'মতামত দিন!' )
 				.addClass( 'feedback-link link' )
 				.click( function () {
 					feedback.launch( {
-						subject: ( type ? 'Feedback about ' + type : 'AFCH feedback' )
+						subject: ( type ? type + 'ব্যাপারে মতামত': 'AFCH feedback' )
 					} );
 				} )
 				.appendTo( $element );
@@ -414,7 +413,7 @@
 				}
 
 				this._revisionApiRequest( true ).done( function () {
-					var catRegex = new RegExp( '\\[\\[' + ( includeCategoryLinks ? ':?' : '' ) + 'Category:(.*?)\\s*\\]\\]', 'gi' ),
+					var catRegex = new RegExp( '\\[\\[' + ( includeCategoryLinks ? ':?' : '' ) + 'বিষয়শ্রেণী:(.*?)\\s*\\]\\]', 'gi' ),
 						match = catRegex.exec( text ),
 						categories = [];
 
@@ -587,16 +586,16 @@
 
 							rev = data.query.pages[ id ].revisions[ 0 ];
 							deferred.resolve( rev[ '*' ], rev );
-							status.update( 'Got $1' );
+							status.update( '$1 পাওয়া গেছে' );
 						} else {
 							deferred.reject( data );
 							// FIXME: get detailed error info from API result
-							status.update( 'Error getting $1: ' + JSON.stringify( data ) );
+							status.update( '$1 পেতে ত্রুটি: ' + JSON.stringify( data ) );
 						}
 					} )
 					.fail( function ( err ) {
 						deferred.reject( err );
-						status.update( 'Error getting $1: ' + JSON.stringify( err ) );
+						status.update( '$1 পেতে ত্রুটি: ' + JSON.stringify( err ) );
 					} );
 
 				return deferred;
@@ -624,7 +623,7 @@
 				}
 
 				if ( !options.hide ) {
-					status = new AFCH.status.Element( ( options.statusText || 'Editing' ) + ' $1...',
+					status = '$1 ' + new AFCH.status.Element( ( options.statusText || 'সম্পাদনা করা হচ্ছে' ) + ' ...',
 						{ $1: AFCH.makeLinkElementToPage( pagename ) } );
 				} else {
 					status = AFCH.consts.nullstatus;
@@ -637,7 +636,7 @@
 					summary: options.summary + AFCH.consts.summaryAd
 				};
 
-				if ( pagename.indexOf( 'Draft:' ) === 0 ) {
+				if ( pagename.indexOf( 'খসড়া:' ) === 0 ) {
 					request.nocreate = 'true';
 				}
 
@@ -652,7 +651,7 @@
 				}
 
 				if ( AFCH.consts.mockItUp ) {
-					AFCH.log( 'Edit to "' + pagename + '"', request );
+					AFCH.log( '"' + pagename + '" সম্পাদনা', request );
 					deferred.resolve();
 					return deferred;
 				}
@@ -665,7 +664,7 @@
 							deferred.resolve( data );
 
 							if ( data.edit.hasOwnProperty( 'nochange' ) ) {
-								status.update( 'No changes made to $1' );
+								status.update( '$1 পাতায় কোনো পরিবর্তন হয় নি' );
 								return;
 							}
 
@@ -674,16 +673,16 @@
 								'Special:Diff/' + data.edit.oldrevid + '/' + data.edit.newrevid, '(diff)'
 							).addClass( 'text-smaller' );
 
-							status.update( 'Saved $1 ' + AFCH.jQueryToHtml( $diffLink ) );
+							status.update( '$1 সংরক্ষিত হয়েছে' + AFCH.jQueryToHtml( $diffLink ) );
 						} else {
 							deferred.reject( data );
 							// FIXME: get detailed error info from API result??
-							status.update( 'Error while saving $1: ' + JSON.stringify( data ) );
+							status.update( '$1 সম্পাদনায় ত্রুটি: ' + JSON.stringify( data ) );
 						}
 					} )
 					.fail( function ( err ) {
 						deferred.reject( err );
-						status.update( 'Error while saving $1: ' + JSON.stringify( err ) );
+						status.update( '$1 সম্পাদনায় ত্রুটি: ' + JSON.stringify( err ) );
 					} );
 
 				return deferred;
@@ -715,7 +714,7 @@
 				var status, request, deferred = $.Deferred();
 
 				if ( !hide ) {
-					status = new AFCH.status.Element( 'Moving $1 to $2...', {
+					status = new AFCH.status.Element( '$1 কে $2 -এ স্থানান্তর করা হচ্ছে...', {
 						$1: AFCH.makeLinkElementToPage( oldTitle ),
 						$2: AFCH.makeLinkElementToPage( newTitle )
 					} );
@@ -739,7 +738,7 @@
 				AFCH.api.postWithEditToken( request ) // Move token === edit token
 					.done( function ( data ) {
 						if ( data && data.move ) {
-							status.update( 'Moved $1 to $2' );
+							status.update( '$1 কে $2-এ স্থানান্তরিত করা হলো' );
 							deferred.resolve( data.move );
 						} else {
 							// FIXME: get detailed error info from API result??
@@ -773,10 +772,10 @@
 
 				userTalkPage.exists().done( function ( exists ) {
 					userTalkPage.edit( {
-						contents: ( exists ? '' : '{{Talk header}}' ) + '\n\n' + options.message,
-						summary: options.summary || 'Notifying user',
+						contents: ( exists ? '' : '{{আলাপ পাতা}}' ) + '\n\n' + options.message,
+						summary: options.summary || 'ব্যবহারকারীকে জানানো হচ্ছে',
 						mode: 'appendtext',
-						statusText: 'Notifying',
+						statusText: 'জানানো হচ্ছে',
 						hide: options.hide
 					} )
 						.done( function () {
@@ -803,7 +802,7 @@
 			logCSD: function ( options ) {
 				var deferred = $.Deferred(),
 					logPage = new AFCH.Page( 'User:' + mw.config.get( 'wgUserName' ) + '/' +
-						( window.Twinkle && window.Twinkle.getPref( 'speedyLogPageName' ) || 'CSD log' ) );
+						( window.Twinkle && window.Twinkle.getPref( 'speedyLogPageName' ) || 'দ্রুত অপসারণ লগ' ) );
 
 				// Abort if user disabled in preferences
 				if ( !AFCH.prefs.logCsd ) {
@@ -823,10 +822,10 @@
 					appendText += '\n# [[:' + options.title + ']]: ' + options.reason;
 
 					if ( options.usersNotified && options.usersNotified.length ) {
-						appendText += '; notified {{user|1=' + options.usersNotified.shift() + '}}';
+						appendText += '; {{ব্যবহারকারী|1=' + options.usersNotified.shift() + '}} কে জানানো হয়েছে';
 
 						$.each( options.usersNotified, function ( _, user ) {
-							appendText += ', {{user|1=' + user + '}}';
+							appendText += ', {{ব্যবহারকারী|1=' + user + '}}';
 						} );
 					}
 
@@ -849,7 +848,7 @@
 
 			logAfc: function ( options ) {
 				var deferred = $.Deferred(),
-					logPage = new AFCH.Page( 'User:' + mw.config.get( 'wgUserName' ) + '/AfC log' );
+					logPage = new AFCH.Page( 'ব্যবহারকারী:' + mw.config.get( 'wgUserName' ) + '/নিতৈস লগ' );
 
 				// Abort if user disabled in preferences
 				if ( !AFCH.prefs.logAfc ) {
@@ -872,15 +871,15 @@
 						declineReason = ' (' + options.declineReason + ( options.declineReason2 ? ' & ' + options.declineReason2 : '' ) + ')';
 					}
 
-					var byUser = ' by [[User:' + options.submitter + '|]]';
+					var byUser = '[[ব্যবহারকারী:' + options.submitter + '|]] কর্তৃক';
 					var sig = ' ~~' + '~~' + '~\n';
 
 					// Make log edit
 					logPage.edit( {
 						contents: header + action + title + declineReason + byUser + sig,
 						mode: 'appendtext',
-						summary: 'Logging ' + options.actionType + ' of [[' + options.title + ']]',
-						statusText: 'Logging ' + options.actionType + ' to'
+						summary:   '[[' + options.title + ']]-এর ' + options.actionType + ' লগ করা হচ্ছে' ,
+						statusText: options.actionType + ' -এ লগ করা হচ্ছে'
 					} ).done( function ( data ) {
 						deferred.resolve( data );
 					} ).fail( function ( data ) {
