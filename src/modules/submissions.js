@@ -1418,7 +1418,7 @@
 			} else {
 				wikiProjects = [];
 				$.ajax( {
-					url: mw.config.get( 'wgServer' ) + '/w/index.php?title=Wikipedia:WikiProject_Articles_for_creation/WikiProject_templates.json&action=raw&ctype=text/json',
+					url: mw.config.get( 'wgServer' ) + '/w/index.php?title=মিডিয়াউইকি:Gadget-afchelper.js/WPTemplates.json&action=raw&ctype=text/json',
 					dataType: 'json'
 				} ).done( function ( projectData ) {
 					$.each( projectData, function ( display, template ) {

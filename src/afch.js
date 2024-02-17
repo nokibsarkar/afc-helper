@@ -14,6 +14,7 @@
 			}
 			break;
 		case 2: // User
+		case 3002: // Draft
 		case 118: // Draft
 			break;
 		default:
@@ -33,7 +34,7 @@
 	// script at scripts/upload.py doesn't break.
 	AFCH.consts.beta = true;
 	AFCH.consts.baseurl = AFCH.consts.scriptpath +
-		'?action=raw&ctype=text/javascript&title=MediaWiki:Gadget-afchelper.js';
+		'?action=raw&ctype=text/javascript&title=MediaWiki:Gadget-afch.js';
 	AFCH.consts.whitelistRequired = false;
 
 	$.getScript( AFCH.consts.baseurl + '/core.js' ).done( function () {

@@ -99,7 +99,8 @@ if using_mwclient:
 	else:
 		server_name = 'bnwiki.miraheze.org'
 	site = mwclient.Site(server_name)
-	site.login(username, getpass.getpass('Password for {} on {}: '.format(username, server_name)))
+	password = os.environ.get('MW_PASSWORD') or getpass.getpass('Password for {} on {}: '.format(username, server_name))
+	site.login(username, password)
 	print('Logged in as {}.'.format(site.username))
 
 	def setPageText(title, text, summary):
