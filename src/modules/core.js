@@ -141,8 +141,8 @@
 										action: 'options',
 										change: 'gadget-afchelper=0'
 									} ).done( function ( data ) {
-										mw.notify( 'AFCH has been disabled successfully. If you wish to re-enable it in the ' +
-											'future, you can do so via your Preferences by checking "Yet Another AFC Helper Script".' );
+										mw.notify( 'AFCH সফলভাবে নিস্ক্রিয় করা হয়েছে। আপনি যদি ভবিষ্যতে এটি পুনরায় সক্রিয় করতে চান, তবে আপনি ' +
+											'আপনার পছন্দসমূহের গ্যাজেট ট্যাব থেকে "সহায়ক স্ক্রিপ্ট" লেখার পাশে টিকচিহ্ন দিয়ে তা করতে পারেন।' );
 									} );
 								} )
 							)
@@ -223,8 +223,8 @@
 		initFeedback: function ( $element, type, linkText ) {
 			var feedback = new mw.Feedback( {
 				title: new mw.Title( 'উইকিপিডিয়া আলাপ:WikiProject Articles for creation/Helper script' ),
-				bugsLink: 'https://en.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script&action=edit&section=new',
-				bugsListLink: 'https://en.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script'
+				bugsLink: 'https://bn.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script&action=edit&section=new',
+				bugsListLink: 'https://bn.wikipedia.org/w/index.php?title=Wikipedia_talk:WikiProject_Articles_for_creation/Helper_script'
 			} );
 			$( '<span>' )
 				.text( linkText || 'মতামত দিন!' )
@@ -663,7 +663,7 @@
 							deferred.resolve( data );
 
 							if ( data.edit.hasOwnProperty( 'nochange' ) ) {
-								status.update( '$1 পাতায় কোনো পরিবর্তন হয় নি' );
+								status.update( '$1 পাতায় কোনো পরিবর্তন হয়নি' );
 								return;
 							}
 
@@ -713,7 +713,7 @@
 				var status, request, deferred = $.Deferred();
 
 				if ( !hide ) {
-					status = new AFCH.status.Element( '$1 কে $2 -এ স্থানান্তর করা হচ্ছে...', {
+					status = new AFCH.status.Element( '$1 কে $2-এ স্থানান্তর করা হচ্ছে...', {
 						$1: AFCH.makeLinkElementToPage( oldTitle ),
 						$2: AFCH.makeLinkElementToPage( newTitle )
 					} );
@@ -741,12 +741,12 @@
 							deferred.resolve( data.move );
 						} else {
 							// FIXME: get detailed error info from API result??
-							status.update( 'Error moving $1 to $2: ' + JSON.stringify( data.error ) );
+							status.update( '$1 কে $2-এ স্থানান্তরের সময় ত্রুটি: ' + JSON.stringify( data.error ) );
 							deferred.reject( data.error );
 						}
 					} )
 					.fail( function ( err ) {
-						status.update( 'Error moving $1 to $2: ' + JSON.stringify( err ) );
+						status.update( '$1 কে $2-এ স্থানান্তরের সময় ত্রুটি: ' + JSON.stringify( err ) );
 						deferred.reject( err );
 					} );
 
@@ -821,7 +821,7 @@
 					appendText += '\n# [[:' + options.title + ']]: ' + options.reason;
 
 					if ( options.usersNotified && options.usersNotified.length ) {
-						appendText += '; {{ব্যবহারকারী|1=' + options.usersNotified.shift() + '}} কে জানানো হয়েছে';
+						appendText += '; {{ব্যবহারকারী|1=' + options.usersNotified.shift() + '}}-কে জানানো হয়েছে';
 
 						$.each( options.usersNotified, function ( _, user ) {
 							appendText += ', {{ব্যবহারকারী|1=' + user + '}}';
@@ -1312,8 +1312,8 @@
 				AFCH.userData.set( 'preferences', this.prefStore ).done( function () {
 					// When we're done, close the dialog and notify the user
 					prefs.$dialog.dialog( 'close' );
-					mw.notify( 'AFCH: Preferences saved successfully! They will take effect when the current page is ' +
-						'reloaded or when you browse to another page.' );
+					mw.notify( 'AFCH: পছন্দগুলি সফলভাবে সংরক্ষণ করা হয়েছে! বর্তমান পাতাটি পুনরায় লোড করা হলে ' +
+						'বা আপনি অন্য পাতায় ব্রাউজ করলে এটি প্রয়োগ হবে।' );
 				} );
 			};
 
@@ -1325,7 +1325,7 @@
 			 */
 			this.initLink = function ( $element, linkText ) {
 				$( '<span>' )
-					.text( linkText || 'Update preferences' )
+					.text( linkText || 'পছন্দসমূহ হালনাগাদ' )
 					.addClass( 'preferences-link link' )
 					.appendTo( $element )
 					.click( function () {
