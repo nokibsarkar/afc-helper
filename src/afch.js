@@ -36,6 +36,7 @@
 	AFCH.consts.baseurl = AFCH.consts.scriptpath +
 		'?action=raw&ctype=text/javascript&title=MediaWiki:Gadget-afch.js';
 	AFCH.consts.whitelistRequired = false;
+	AFCH.consts.WPTemplateList = 'মিডিয়াউইকি:Gadget-afchelper.js/WPTemplates.json';
 
 	$.getScript( AFCH.consts.baseurl + '/core.js' ).done( function () {
 		var loaded = AFCH.load( 'submissions' ); // perhaps eventually there will be more modules besides just 'submissions'
