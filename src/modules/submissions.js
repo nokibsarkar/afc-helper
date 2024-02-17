@@ -1363,7 +1363,7 @@
 
 		// Add a new spinner if one doesn't already exist
 		if ( !$container.find( '.mw-spinner' ).length ) {
-console.log( 'spinnerAndRun')
+			console.log( 'spinnerAndRun' );
 			$spinner = $.createSpinner( {
 				size: 'large',
 				type: 'block'
@@ -2460,343 +2460,343 @@ console.log( 'spinnerAndRun')
 
 			// Include the URLs in the decline template
 			if ( declineReason === 'cv' ) {
-							newParams[ '3' ] = cvUrls.join( ', ' );
-						} else {
-							newParams.details2 = cvUrls.join( ', ' );
-						}
-					}
+				newParams[ '3' ] = cvUrls.join( ', ' );
+			} else {
+				newParams.details2 = cvUrls.join( ', ' );
+			}
+		}
 
-					if ( !isDecline ) {
-						newParams.reject = 'yes';
-					}
+		if ( !isDecline ) {
+			newParams.reject = 'yes';
+		}
 
-					// Now update the submission status
-					afchSubmission.setStatus( 'd', newParams );
-					console.log("afchSubmission.setStatus called");
+		// Now update the submission status
+		afchSubmission.setStatus( 'd', newParams );
+		console.log( 'afchSubmission.setStatus called' );
 
-					text.updateAfcTemplates( afchSubmission.makeWikicode() );
-					console.log("text.updateAfcTemplates called");
-					text.cleanUp();
-					console.log("text.cleanUp called");
+		text.updateAfcTemplates( afchSubmission.makeWikicode() );
+		console.log( 'text.updateAfcTemplates called' );
+		text.cleanUp();
+		console.log( 'text.cleanUp called' );
 
-					// Build edit summary
-					var editSummary = ( isDecline ? 'Declining' : 'Rejecting' ) + ' submission: ',
-						lengthLimit = declineReason2 ? 120 : 180;
-					if ( declineReason === 'reason' ) {
+		// Build edit summary
+		var editSummary = ( isDecline ? 'Declining' : 'Rejecting' ) + ' submission: ',
+			lengthLimit = declineReason2 ? 120 : 180;
+		if ( declineReason === 'reason' ) {
 
-						// If this is a custom decline, use the text in the edit summary
-						editSummary += data.declineTextarea.substring( 0, lengthLimit );
+			// If this is a custom decline, use the text in the edit summary
+			editSummary += data.declineTextarea.substring( 0, lengthLimit );
 
-						// If we had to trunucate, indicate that
-						if ( data.declineTextarea.length > lengthLimit ) {
-							editSummary += '...';
-						}
-					} else {
-						editSummary += isDecline ? data.declineReasonTexts[ 0 ] : data.rejectReasonTexts[ 0 ];
-					}
+			// If we had to trunucate, indicate that
+			if ( data.declineTextarea.length > lengthLimit ) {
+				editSummary += '...';
+			}
+		} else {
+			editSummary += isDecline ? data.declineReasonTexts[ 0 ] : data.rejectReasonTexts[ 0 ];
+		}
 
-					if ( declineReason2 ) {
-						editSummary += ' and ';
-						if ( declineReason2 === 'reason' ) {
-							editSummary += data.declineTextarea.substring( 0, lengthLimit );
-							if ( data.declineTextarea.length > lengthLimit ) {
-								editSummary += '...';
+		if ( declineReason2 ) {
+			editSummary += ' and ';
+			if ( declineReason2 === 'reason' ) {
+				editSummary += data.declineTextarea.substring( 0, lengthLimit );
+				if ( data.declineTextarea.length > lengthLimit ) {
+					editSummary += '...';
+				}
+			} else {
+				editSummary += data.declineReasonTexts[ 1 ];
+			}
+		}
+
+		afchPage.edit( {
+			contents: text.get(),
+			summary: editSummary
+		} );
+		console.log( 'afchPage.edit called' );
+
+		if ( data.notifyUser ) {
+			afchSubmission.getSubmitter().done( function ( submitter ) {
+				var userTalk = new AFCH.Page( ( new mw.Title( submitter, 3 ) ).getPrefixedText() ),
+					shouldTeahouse = data.inviteToTeahouse ? $.Deferred() : false;
+
+				// Check categories on the page to ensure that if the user has already been
+				// invited to the Teahouse, we don't invite them again.
+				if ( data.inviteToTeahouse ) {
+					userTalk.getCategories( /* useApi */ true ).done( function ( categories ) {
+						var hasTeahouseCat = false,
+							teahouseCategories = [
+								'Category:Wikipedians who have received a Teahouse invitation',
+								'Category:Wikipedians who have received a Teahouse invitation through AfC'
+							];
+
+						$.each( categories, function ( _, cat ) {
+							if ( teahouseCategories.indexOf( cat ) !== -1 ) {
+								hasTeahouseCat = true;
+								return false;
 							}
-						} else {
-							editSummary += data.declineReasonTexts[ 1 ];
-						}
-					}
-
-					afchPage.edit( {
-						contents: text.get(),
-						summary: editSummary
-					} );
-					console.log("afchPage.edit called");
-
-					if ( data.notifyUser ) {
-						afchSubmission.getSubmitter().done( function ( submitter ) {
-							var userTalk = new AFCH.Page( ( new mw.Title( submitter, 3 ) ).getPrefixedText() ),
-								shouldTeahouse = data.inviteToTeahouse ? $.Deferred() : false;
-
-							// Check categories on the page to ensure that if the user has already been
-							// invited to the Teahouse, we don't invite them again.
-							if ( data.inviteToTeahouse ) {
-								userTalk.getCategories( /* useApi */ true ).done( function ( categories ) {
-									var hasTeahouseCat = false,
-										teahouseCategories = [
-											'Category:Wikipedians who have received a Teahouse invitation',
-											'Category:Wikipedians who have received a Teahouse invitation through AfC'
-										];
-
-									$.each( categories, function ( _, cat ) {
-										if ( teahouseCategories.indexOf( cat ) !== -1 ) {
-											hasTeahouseCat = true;
-											return false;
-										}
-									} );
-
-									shouldTeahouse.resolve( !hasTeahouseCat );
-								} );
-							}
-
-							$.when( shouldTeahouse ).then( function ( teahouse ) {
-								var message;
-								if ( isDecline ) {
-									message = AFCH.msg.get( 'declined-submission', {
-										$1: AFCH.consts.pagename,
-										$2: afchSubmission.shortTitle,
-										$3: ( declineReason === 'cv' || declineReason2 === 'cv' ) ?
-											'yes' : 'no',
-										$4: declineReason,
-										$5: newParams[ '3' ] || '',
-										$6: declineReason2 || '',
-										$7: newParams.details2 || '',
-										$8: ( declineReason === 'reason' || declineReason2 === 'reason' ) ?
-											'' : data.declineTextarea
-									} );
-								} else {
-									message = AFCH.msg.get( 'rejected-submission', {
-										$1: AFCH.consts.pagename,
-										$2: afchSubmission.shortTitle,
-										$3: data.rejectReason[ 0 ],
-										$4: '',
-										$5: data.rejectReason[ 1 ] || '',
-										$6: '',
-										$7: data.rejectTextarea
-									} );
-								}
-
-								if ( teahouse ) {
-									message += '\n\n' + AFCH.msg.get( 'teahouse-invite' );
-								}
-
-								AFCH.actions.notifyUser( submitter, {
-									message: message,
-									summary: 'Notification: Your [[' + AFCH.consts.pagename + '|Articles for Creation submission]] has been ' + ( isDecline ? 'declined' : 'rejected' )
-								} );
-							} );
-						} );
-					}
-
-					// Log AfC if enabled and CSD if necessary
-					afchSubmission.getSubmitter().done( function ( submitter ) {
-						AFCH.actions.logAfc( {
-							title: afchPage.rawTitle,
-							actionType: isDecline ? 'decline' : 'reject',
-							declineReason: declineReason,
-							declineReason2: declineReason2,
-							submitter: submitter
 						} );
 
-						if ( data.csdSubmission ) {
-							AFCH.actions.logCSD( {
-								title: afchPage.rawTitle,
-								reason: declineReason === 'cv' ? '[[WP:G12]] ({{tl|db-copyvio}})' :
-									'{{tl|db-reason}} ([[WP:AFC|Articles for creation]])',
-								usersNotified: data.notifyUser ? [ submitter ] : []
-							} );
-						}
+						shouldTeahouse.resolve( !hasTeahouseCat );
 					} );
-					console.log("afchSubmission.getSubmitter called");
 				}
 
-				function handleComment( data ) {
-					var text = data.afchText;
-
-					afchSubmission.addNewComment( data.commentText );
-					text.updateAfcTemplates( afchSubmission.makeWikicode() );
-
-					text.cleanUp();
-
-					afchPage.edit( {
-						contents: text.get(),
-						summary: 'Commenting on submission'
-					} );
-
-					if ( data.notifyUser ) {
-						afchSubmission.getSubmitter().done( function ( submitter ) {
-							AFCH.actions.notifyUser( submitter, {
-								message: AFCH.msg.get( 'comment-on-submission',
-									{ $1: AFCH.consts.pagename } ),
-								summary: 'Notification: I\'ve commented on [[' + AFCH.consts.pagename + '|your Articles for Creation submission]]'
-							} );
-						} );
-					}
-					console.log("afchSubmission.getSubmitter called");
-				}
-
-				function handleSubmit( data ) {
-					var text = data.afchText,
-						submitter = $.Deferred(),
-						submitType = data.submitType;
-
-					if ( submitType === 'other' ) {
-						submitter.resolve( data.submitterName );
-					} else if ( submitType === 'self' ) {
-						submitter.resolve( AFCH.consts.user );
-					} else if ( submitType === 'creator' ) {
-						afchPage.getCreator().done( function ( user ) {
-							submitter.resolve( user );
+				$.when( shouldTeahouse ).then( function ( teahouse ) {
+					var message;
+					if ( isDecline ) {
+						message = AFCH.msg.get( 'declined-submission', {
+							$1: AFCH.consts.pagename,
+							$2: afchSubmission.shortTitle,
+							$3: ( declineReason === 'cv' || declineReason2 === 'cv' ) ?
+								'yes' : 'no',
+							$4: declineReason,
+							$5: newParams[ '3' ] || '',
+							$6: declineReason2 || '',
+							$7: newParams.details2 || '',
+							$8: ( declineReason === 'reason' || declineReason2 === 'reason' ) ?
+								'' : data.declineTextarea
 						} );
 					} else {
-						// Custom selected submitter
-						submitter.resolve( data.submitType );
+						message = AFCH.msg.get( 'rejected-submission', {
+							$1: AFCH.consts.pagename,
+							$2: afchSubmission.shortTitle,
+							$3: data.rejectReason[ 0 ],
+							$4: '',
+							$5: data.rejectReason[ 1 ] || '',
+							$6: '',
+							$7: data.rejectTextarea
+						} );
 					}
 
-					submitter.done( function ( submitter ) {
-						afchSubmission.setStatus( '', { u: submitter } );
+					if ( teahouse ) {
+						message += '\n\n' + AFCH.msg.get( 'teahouse-invite' );
+					}
 
-						text.updateAfcTemplates( afchSubmission.makeWikicode() );
-						text.cleanUp();
-
-						afchPage.edit( {
-							contents: text.get(),
-							summary: 'Submitting'
-						} );
-
+					AFCH.actions.notifyUser( submitter, {
+						message: message,
+						summary: 'Notification: Your [[' + AFCH.consts.pagename + '|Articles for Creation submission]] has been ' + ( isDecline ? 'declined' : 'rejected' )
 					} );
-					console.log("afchPage.getCreator called");
-				}
+				} );
+			} );
+		}
 
-				function handleCleanup() {
-					prepareForProcessing( 'Cleaning' );
+		// Log AfC if enabled and CSD if necessary
+		afchSubmission.getSubmitter().done( function ( submitter ) {
+			AFCH.actions.logAfc( {
+				title: afchPage.rawTitle,
+				actionType: isDecline ? 'decline' : 'reject',
+				declineReason: declineReason,
+				declineReason2: declineReason2,
+				submitter: submitter
+			} );
 
-					afchPage.getText( false ).done( function ( rawText ) {
-						var text = new AFCH.Text( rawText );
+			if ( data.csdSubmission ) {
+				AFCH.actions.logCSD( {
+					title: afchPage.rawTitle,
+					reason: declineReason === 'cv' ? '[[WP:G12]] ({{tl|db-copyvio}})' :
+						'{{tl|db-reason}} ([[WP:AFC|Articles for creation]])',
+					usersNotified: data.notifyUser ? [ submitter ] : []
+				} );
+			}
+		} );
+		console.log( 'afchSubmission.getSubmitter called' );
+	}
 
-						// Even though we didn't modify them, still update the templates,
-						// because the order may have changed/been corrected
-						text.updateAfcTemplates( afchSubmission.makeWikicode() );
+	function handleComment( data ) {
+		var text = data.afchText;
 
-						text.cleanUp();
+		afchSubmission.addNewComment( data.commentText );
+		text.updateAfcTemplates( afchSubmission.makeWikicode() );
 
-						afchPage.edit( {
-							contents: text.get(),
-							minor: true,
-							summary: 'Cleaning up submission'
-						} );
-					} );
-					console.log("afchPage.getText called");
-				}
+		text.cleanUp();
 
-				function handleMark( unmark ) {
-					var actionText = ( unmark ? 'Unmarking' : 'Marking' );
+		afchPage.edit( {
+			contents: text.get(),
+			summary: 'Commenting on submission'
+		} );
 
-					prepareForProcessing( actionText, 'mark' );
+		if ( data.notifyUser ) {
+			afchSubmission.getSubmitter().done( function ( submitter ) {
+				AFCH.actions.notifyUser( submitter, {
+					message: AFCH.msg.get( 'comment-on-submission',
+						{ $1: AFCH.consts.pagename } ),
+					summary: 'Notification: I\'ve commented on [[' + AFCH.consts.pagename + '|your Articles for Creation submission]]'
+				} );
+			} );
+		}
+		console.log( 'afchSubmission.getSubmitter called' );
+	}
 
-					afchPage.getText( false ).done( function ( rawText ) {
-						var text = new AFCH.Text( rawText );
+	function handleSubmit( data ) {
+		var text = data.afchText,
+			submitter = $.Deferred(),
+			submitType = data.submitType;
 
-						if ( unmark ) {
-							afchSubmission.setStatus( '', { reviewer: false, reviewts: false } );
-						} else {
-							afchSubmission.setStatus( 'r', {
-								reviewer: AFCH.consts.user,
-								reviewts: '{{subst:REVISIONTIMESTAMP}}'
-							} );
-						}
+		if ( submitType === 'other' ) {
+			submitter.resolve( data.submitterName );
+		} else if ( submitType === 'self' ) {
+			submitter.resolve( AFCH.consts.user );
+		} else if ( submitType === 'creator' ) {
+			afchPage.getCreator().done( function ( user ) {
+				submitter.resolve( user );
+			} );
+		} else {
+			// Custom selected submitter
+			submitter.resolve( data.submitType );
+		}
 
-						text.updateAfcTemplates( afchSubmission.makeWikicode() );
-						text.cleanUp();
+		submitter.done( function ( submitter ) {
+			afchSubmission.setStatus( '', { u: submitter } );
 
-						afchPage.edit( {
-							contents: text.get(),
-							summary: actionText + ' submission as under review'
-						} );
-					} );
-					console.log("afchPage.getText called");
-				}
+			text.updateAfcTemplates( afchSubmission.makeWikicode() );
+			text.cleanUp();
 
-				function handleG13() {
-					// We start getting the creator now (for notification later) because ajax is
-					// radical and handles simultaneous requests, but we don't let it delay tagging
-					var gotCreator = afchPage.getCreator();
+			afchPage.edit( {
+				contents: text.get(),
+				summary: 'Submitting'
+			} );
 
-					// Update the display
-					prepareForProcessing( 'Requesting', 'g13' );
+		} );
+		console.log( 'afchPage.getCreator called' );
+	}
 
-					// Get the page text and the last modified date (cached!) and tag the page
-					$.when(
-						afchPage.getText( false ),
-						afchPage.getLastModifiedDate()
-					).then( function ( rawText, lastModified ) {
-						var text = new AFCH.Text( rawText );
+	function handleCleanup() {
+		prepareForProcessing( 'Cleaning' );
 
-						// Add the deletion tag and clean up for good measure
-						text.prepend( '{{db-g13|ts=' + AFCH.dateToMwTimestamp( lastModified ) + '}}\n' );
-						text.cleanUp();
+		afchPage.getText( false ).done( function ( rawText ) {
+			var text = new AFCH.Text( rawText );
 
-						afchPage.edit( {
-							contents: text.get(),
-							summary: 'Tagging abandoned [[Wikipedia:Articles for creation|Articles for creation]] draft ' +
+			// Even though we didn't modify them, still update the templates,
+			// because the order may have changed/been corrected
+			text.updateAfcTemplates( afchSubmission.makeWikicode() );
+
+			text.cleanUp();
+
+			afchPage.edit( {
+				contents: text.get(),
+				minor: true,
+				summary: 'Cleaning up submission'
+			} );
+		} );
+		console.log( 'afchPage.getText called' );
+	}
+
+	function handleMark( unmark ) {
+		var actionText = ( unmark ? 'Unmarking' : 'Marking' );
+
+		prepareForProcessing( actionText, 'mark' );
+
+		afchPage.getText( false ).done( function ( rawText ) {
+			var text = new AFCH.Text( rawText );
+
+			if ( unmark ) {
+				afchSubmission.setStatus( '', { reviewer: false, reviewts: false } );
+			} else {
+				afchSubmission.setStatus( 'r', {
+					reviewer: AFCH.consts.user,
+					reviewts: '{{subst:REVISIONTIMESTAMP}}'
+				} );
+			}
+
+			text.updateAfcTemplates( afchSubmission.makeWikicode() );
+			text.cleanUp();
+
+			afchPage.edit( {
+				contents: text.get(),
+				summary: actionText + ' submission as under review'
+			} );
+		} );
+		console.log( 'afchPage.getText called' );
+	}
+
+	function handleG13() {
+		// We start getting the creator now (for notification later) because ajax is
+		// radical and handles simultaneous requests, but we don't let it delay tagging
+		var gotCreator = afchPage.getCreator();
+
+		// Update the display
+		prepareForProcessing( 'Requesting', 'g13' );
+
+		// Get the page text and the last modified date (cached!) and tag the page
+		$.when(
+			afchPage.getText( false ),
+			afchPage.getLastModifiedDate()
+		).then( function ( rawText, lastModified ) {
+			var text = new AFCH.Text( rawText );
+
+			// Add the deletion tag and clean up for good measure
+			text.prepend( '{{db-g13|ts=' + AFCH.dateToMwTimestamp( lastModified ) + '}}\n' );
+			text.cleanUp();
+
+			afchPage.edit( {
+				contents: text.get(),
+				summary: 'Tagging abandoned [[Wikipedia:Articles for creation|Articles for creation]] draft ' +
 								'for speedy deletion under [[WP:G13|G13]]'
-						} );
+			} );
 
-						// Now notify the page creator as well as any and all previous submitters
-						$.when( gotCreator ).then( function ( creator ) {
-							var usersToNotify = [ creator ];
+			// Now notify the page creator as well as any and all previous submitters
+			$.when( gotCreator ).then( function ( creator ) {
+				var usersToNotify = [ creator ];
 
-							$.each( afchSubmission.submitters, function ( _, submitter ) {
-								// Don't notify the same user multiple times
-								if ( usersToNotify.indexOf( submitter ) === -1 ) {
-									usersToNotify.push( submitter );
-								}
-							} );
-
-							$.each( usersToNotify, function ( _, user ) {
-								AFCH.actions.notifyUser( user, {
-									message: AFCH.msg.get( 'g13-submission',
-										{ $1: AFCH.consts.pagename } ),
-									summary: 'Notification: [[WP:G13|G13]] speedy deletion nomination of [[' + AFCH.consts.pagename + ']]'
-								} );
-							} );
-
-							// And finally log the CSD nomination once all users have been notified
-							AFCH.actions.logCSD( {
-								title: afchPage.rawTitle,
-								reason: '[[WP:G13]] ({{tl|db-afc}})',
-								usersNotified: usersToNotify
-							} );
-						} );
-					} );
-					console.log("afchPage.getCreator called");
-				}
-
-				function handlePostponeG13( data ) {
-					var postponeCode,
-						text = data.afchText,
-						rawText = text.get(),
-						postponeRegex = /\{\{AfC postpone G13\s*(?:\|\s*(\d*)\s*)?\}\}/ig;
-					match = postponeRegex.exec( rawText );
-
-					// First add the postpone template
-					if ( match ) {
-						if ( match[ 1 ] !== undefined ) {
-							postponeCode = '{{AfC postpone G13|' + ( parseInt( match[ 1 ] ) + 1 ) + '}}';
-						} else {
-							postponeCode = '{{AfC postpone G13|2}}';
-						}
-						rawText = rawText.replace( match[ 0 ], postponeCode );
-					} else {
-						rawText += '\n{{AfC postpone G13|1}}';
+				$.each( afchSubmission.submitters, function ( _, submitter ) {
+					// Don't notify the same user multiple times
+					if ( usersToNotify.indexOf( submitter ) === -1 ) {
+						usersToNotify.push( submitter );
 					}
+				} );
 
-					text.set( rawText );
-
-					// Then add the comment if entered
-					if ( data.commentText ) {
-						afchSubmission.addNewComment( data.commentText );
-						text.updateAfcTemplates( afchSubmission.makeWikicode() );
-					}
-
-					text.cleanUp();
-
-					afchPage.edit( {
-						contents: text.get(),
-						summary: 'Postponing [[WP:G13|G13]] speedy deletion'
+				$.each( usersToNotify, function ( _, user ) {
+					AFCH.actions.notifyUser( user, {
+						message: AFCH.msg.get( 'g13-submission',
+							{ $1: AFCH.consts.pagename } ),
+						summary: 'Notification: [[WP:G13|G13]] speedy deletion nomination of [[' + AFCH.consts.pagename + ']]'
 					} );
-					console.log("afchPage.edit called");
-				}
+				} );
 
-			}( AFCH, jQuery, mediaWiki ) );
-			//</nowiki>
+				// And finally log the CSD nomination once all users have been notified
+				AFCH.actions.logCSD( {
+					title: afchPage.rawTitle,
+					reason: '[[WP:G13]] ({{tl|db-afc}})',
+					usersNotified: usersToNotify
+				} );
+			} );
+		} );
+		console.log( 'afchPage.getCreator called' );
+	}
+
+	function handlePostponeG13( data ) {
+		var postponeCode,
+			text = data.afchText,
+			rawText = text.get(),
+			postponeRegex = /\{\{AfC postpone G13\s*(?:\|\s*(\d*)\s*)?\}\}/ig;
+		match = postponeRegex.exec( rawText );
+
+		// First add the postpone template
+		if ( match ) {
+			if ( match[ 1 ] !== undefined ) {
+				postponeCode = '{{AfC postpone G13|' + ( parseInt( match[ 1 ] ) + 1 ) + '}}';
+			} else {
+				postponeCode = '{{AfC postpone G13|2}}';
+			}
+			rawText = rawText.replace( match[ 0 ], postponeCode );
+		} else {
+			rawText += '\n{{AfC postpone G13|1}}';
+		}
+
+		text.set( rawText );
+
+		// Then add the comment if entered
+		if ( data.commentText ) {
+			afchSubmission.addNewComment( data.commentText );
+			text.updateAfcTemplates( afchSubmission.makeWikicode() );
+		}
+
+		text.cleanUp();
+
+		afchPage.edit( {
+			contents: text.get(),
+			summary: 'Postponing [[WP:G13|G13]] speedy deletion'
+		} );
+		console.log( 'afchPage.edit called' );
+	}
+
+}( AFCH, jQuery, mediaWiki ) );
+//</nowiki>

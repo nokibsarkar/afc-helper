@@ -185,7 +185,7 @@
 		 * @param {string} type Which type of script to load:
 		 *                      'redirects' or 'ffu' or 'submissions'
 		 */
-		load: function ( type ) {	
+		load: function ( type ) {
 			if ( !AFCH.setup() ) {
 				return false;
 			}
