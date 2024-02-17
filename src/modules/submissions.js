@@ -308,7 +308,7 @@
 			}
 
 			// Finally, add the timestamp and a warning about removing the template
-			tout += '|ts=' + template.timestamp + '}} <!-- Do not remove this line! -->';
+			tout += '|ts=' + template.timestamp + '}} <!-- এই লাইনটি সরাবেন না! -->';
 
 			output.push( tout );
 		} );
@@ -530,7 +530,7 @@
 				'AfC postpone G13',
 				'Draft topics',
 				'AfC topic',
-				'Drafts moved from mainspace',
+				'প্রধান নামস্থান হতে স্থানান্তরিত খসড়া',
 				'Promising draft'
 			];
 
@@ -585,7 +585,7 @@
 		// Convert http://-style links to other wikipages to wikicode syntax
 		// FIXME: Break this out into its own core function? Will it be used elsewhere?
 		function convertExternalLinksToWikilinks( text ) {
-			var linkRegex = /\[{1,2}(?:https?:)?\/\/(?:en.wikipedia.org\/wiki|enwp.org)\/([^\s\|\]\[]+)(?:\s|\|)?((?:\[\[[^\[\]]*\]\]|[^\]\[])*)\]{1,2}/ig,
+			var linkRegex = /\[{1,2}(?:https?:)?\/\/bn\.(?:m\.)?wikipedia\.org\/wiki\/([^\s\|\]\[]+)(?:\s|\|)?((?:\[\[[^\[\]]*\]\]|[^\]\[])*)\]{1,2}/ig,
 				linkMatch = linkRegex.exec( text ),
 				title, displayTitle, newLink;
 
@@ -728,8 +728,8 @@
 	};
 
 	// Add the launch link
-	$afchLaunchLink = $( mw.util.addPortletLink( AFCH.prefs.launchLinkPosition, '#', 'Review (AFCH)',
-		'afch-launch', 'Review submission using afch-rewrite', '1' ) );
+	$afchLaunchLink = $( mw.util.addPortletLink( AFCH.prefs.launchLinkPosition, '#', 'নিরীক্ষণ (খপ্রস)',
+		'afch-launch', 'খসড়া প্রণয়ন সহায়িকার মাধ্যমে নিরীক্ষণ', '1' ) );
 
 	if ( AFCH.prefs.autoOpen &&
 		// Don't autoload in userspace -- too many false positives
@@ -745,7 +745,7 @@
 	}
 
 	// Mark launch link for the old helper script as "old" if present on page
-	$( '#p-cactions #ca-afcHelper > a' ).append( ' (old)' );
+	$( '#p-cactions #ca-afcHelper > a' ).append( ' (পুরনো)' );
 
 	// If AFCH is destroyed via AFCH.destroy(),
 	// remove the $afch window and the launch link
@@ -773,8 +773,8 @@
 						// Back link appears on the left based on context
 						$( '<div>' )
 							.addClass( 'back-link' )
-							.html( '&#x25c0; back to options' ) // back arrow
-							.attr( 'title', 'Go back' )
+							.html( '&#x25c0; বিকল্পে ফেরত যান' ) // back arrow
+							.attr( 'title', 'পেছনে যান' )
 							.addClass( 'hidden' )
 							.click( function () {
 								// Reload the review panel
@@ -811,7 +811,7 @@
 					.append(
 						$( '<div>' )
 							.addClass( 'initial-header' )
-							.text( 'Loading AFCH ...' )
+							.text( 'নিরীক্ষণ সহায়িকা লোড হচ্ছে ...' )
 					)
 			);
 
@@ -834,7 +834,6 @@
 			afchViews = new AFCH.Views( data );
 			afchViewer = new AFCH.Viewer( afchViews, $afchWrapper );
 		} );
-		console.log( 'setupReviewPanel' );
 		afchPage = new AFCH.Page( AFCH.consts.pagename );
 		afchSubmission = new AFCH.Submission( afchPage );
 
@@ -938,7 +937,7 @@
 			if ( actionMessage !== false ) {
 				$action = $( '<a>' )
 					.addClass( 'link' )
-					.text( actionMessage || 'Edit page' )
+					.text( actionMessage || 'পাতা সম্পাদনা' )
 					.appendTo( $warning );
 
 				if ( typeof onAction === 'function' ) {
@@ -967,7 +966,7 @@
 					refEndRe = /<\/\s*ref\s*\>/ig,
 					refEndMatches = text.match( refEndRe ) || [],
 
-					reflistRe = /({{(ref(erence)?(\s|-)?list|listaref|refs|footnote|reference|referencias)(?:{{[^{}]*}}|[^}{])*}})|(<\s*references\s*\/?>)/ig,
+					reflistRe = /({{(ref(erence)?(\s|-)?list|listaref|refs|footnote|reference|referencias|তথ্যসূত্র)(?:{{[^{}]*}}|[^}{])*}})|(<\s*references\s*\/?>)/ig,
 					hasReflist = reflistRe.test( text ),
 
 					// This isn't as good as a tokenizer, and believes that <ref> foo </b> is
@@ -976,13 +975,13 @@
 
 				// Uneven (/unclosed) <ref> and </ref> tags
 				if ( refBeginMatches.length !== refEndMatches.length ) {
-					addWarning( 'The submission contains ' +
-						( refBeginMatches.length > refEndMatches.length ? 'unclosed' : 'unbalanced' ) + ' <ref> tags.' );
+					addWarning( 'এই খসড়াটিতে ' +
+						( refBeginMatches.length > refEndMatches.length ? 'অসমাপ্ত' : 'অপূর্ণাঙ্গ' ) + ' <ref> ট্যাগ রয়েছে।' );
 				}
 
 				// <ref>1<ref> instead of <ref>1</ref> detection
 				if ( malformedRefs.length ) {
-					addWarning( 'The submission contains malformed <ref> tags.', 'View details', function () {
+					addWarning( 'এই খসড়াটিতে ত্রুটিযুক্ত <ref> ট্যাগ রয়েছে।', 'বিস্তারিত দেখুন', function () {
 						var $toggleLink = $( this ).addClass( 'malformed-refs-toggle' ),
 							$warningDiv = $( this ).parent();
 						$malformedRefWrapper = $( '<div>' )
@@ -998,7 +997,7 @@
 						} );
 
 						// Now change the "View details" link to behave as a normal toggle for .malformed-refs
-						AFCH.makeToggle( '.malformed-refs-toggle', '.malformed-refs', 'View details', 'Hide details' );
+						AFCH.makeToggle( '.malformed-refs-toggle', '.malformed-refs', 'বিস্তারিত দেখুন', 'বিস্তারিত লুকান' );
 
 						return false;
 					} );
@@ -1059,7 +1058,7 @@
 							timestamp: deletion.timestamp,
 							relativeTimestamp: AFCH.relativeTimeSince( deletion.timestamp ),
 							deletor: deletion.user,
-							deletorLink: mw.util.getUrl( 'User:' + deletion.user ),
+							deletorLink: mw.util.getUrl( 'ব্যবহারকারী:' + deletion.user ),
 							reason: AFCH.convertWikilinksToHTML( deletion.comment )
 						} );
 					} );
@@ -1069,7 +1068,7 @@
 						.appendTo( $warningDiv );
 
 					// ...and now convert the link into a toggle which simply hides/shows the div
-					AFCH.makeToggle( '.deletion-log-toggle', '.deletion-log', 'View deletion log', 'Hide deletion log' );
+					AFCH.makeToggle( '.deletion-log-toggle', '.deletion-log', 'অপসারণ লগ দেখুন', 'অপসারণ লগ লুকান' );
 
 					return false;
 				} );
@@ -1090,13 +1089,13 @@
 				if ( isOwnReview ) {
 					reviewer = 'You';
 				} else {
-					reviewer = afchSubmission.params.reviewer || 'Someone';
+					reviewer = afchSubmission.params.reviewer || 'কেউ একজন';
 				}
 
 				addWarning( reviewer + ( afchSubmission.params.reviewts ?
-					' began reviewing this submission ' + AFCH.relativeTimeSince( afchSubmission.params.reviewts ) :
-					' already began reviewing this submission' ) + '.',
-				isOwnReview ? 'Unmark as under review' : 'View page history',
+					AFCH.relativeTimeSince( afchSubmission.params.reviewts ) + ' পূর্ব থেকেই এই খসড়াটি নিরীক্ষা শুরু করেছেন' :
+					' ইতিমধ্যেই নিরীক্ষা শুরু করেছেন' ) + '।',
+				isOwnReview ? 'নিরীক্ষামান অবস্থা হতে সরান' : 'পাতার ইতিহাস দেখুন',
 				isOwnReview ? function () {
 					handleMark( /* unmark */ true );
 				} : mw.util.getUrl( AFCH.consts.pagename, { action: 'history' } ) );
@@ -1117,8 +1116,7 @@
 					oneComment = numberOfComments === 1;
 
 				if ( numberOfComments ) {
-					addWarning( 'The page contains ' + ( oneComment ? 'an' : '' ) + ' HTML comment' + ( oneComment ? '' : 's' ) +
-						' longer than 30 characters.', 'View comment' + ( oneComment ? '' : 's' ), function () {
+					addWarning( 'এই পাতায় ৩০ বর্ণের বেশি ' + ( oneComment ? 'একটি' : 'একাধিক' ) + ' এইচটিএমএল মন্তব্য রয়েছে।', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেস্খুন', function () {
 						var $toggleLink = $( this ).addClass( 'long-comment-toggle' ),
 							$warningDiv = $( this ).parent(),
 							$commentsWrapper = $( '<div>' )
@@ -1135,7 +1133,7 @@
 
 						// Now change the "View comment" link to behave as a normal toggle for .long-comments
 						AFCH.makeToggle( '.long-comment-toggle', '.long-comments',
-							'View comment' + ( oneComment ? '' : 's' ), 'Hide comment' + ( oneComment ? '' : 's' ) );
+							'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেস্খুন', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'লুকান' );
 
 						return false;
 					} );
@@ -1155,7 +1153,7 @@
 				var triageInfo = json.pagetriagelist.pages[ 0 ];
 				if ( triageInfo && triageInfo.copyvio === mw.config.get( 'wgCurRevisionId' ) ) {
 					addWarning( 'This submission may contain copyright violations', 'CopyPatrol', function () {
-						window.open( 'https://copypatrol.toolforge.org/en?filter=all&searchCriteria=page_exact&searchText=' +
+						window.open( 'https://copypatrol.toolforge.org/bn?filter=all&searchCriteria=page_exact&searchText=' +
 							encodeURIComponent( afchPage.rawTitle ) + '&drafts=1&revision=' +
 							mw.config.get( 'wgCurRevisionId' ), '_blank' );
 					} );
@@ -1254,7 +1252,7 @@
 		// a new temporary "processing" stage instead
 		if ( !( $submitBtn.length || $content.length ) ) {
 			loadView( 'quick-action-processing', {
-				actionTitle: actionTitle || 'Processing',
+				actionTitle: actionTitle || 'প্রক্রিয়ারত',
 				actionClass: actionClass || 'other-action'
 			} );
 
@@ -1296,11 +1294,11 @@
 						.attr( 'id', 'reloadLink' )
 						.addClass( 'text-smaller' )
 						.attr( 'href', mw.util.getUrl() )
-						.text( '(reloading...)' )
+						.text( '(পুনর্লোড হচ্ছে...)' )
 				);
 
 			// Show a link to the next random submissions
-			new AFCH.status.Element( 'Continue to next $1 or $2 &raquo;', {
+			new AFCH.status.Element( 'পরবর্তী $1 অথবা $2 এ চলুন&raquo;', {
 				$1: AFCH.makeLinkElementToCategory( 'Pending AfC submissions', 'random submission' ),
 				$2: AFCH.makeLinkElementToCategory( 'AfC pending submissions by age/0 days ago', 'zero-day-old submission' )
 			} );
@@ -1444,7 +1442,7 @@
 
 		var existingWikiProjectsPromise = $.when(
 			loadWikiProjectList(),
-			new AFCH.Page( 'Draft talk:' + afchSubmission.shortTitle ).getTemplates()
+			new AFCH.Page( 'খসড়া আলাপ:' + afchSubmission.shortTitle ).getTemplates()
 		).then( function ( wikiProjects, templates ) {
 			var templateNames = templates.map( function ( template ) {
 				return template.target.trim().toLowerCase();
@@ -1473,7 +1471,7 @@
 			for ( var tplIdx = 0; tplIdx < templateNames.length; tplIdx++ ) {
 				if ( wikiProjectMap.hasOwnProperty( templateNames[ tplIdx ] ) ) {
 					wikiProjectMap[ templateNames[ tplIdx ] ].alreadyOnPage = true;
-				} else if ( templateNames[ tplIdx ] === 'wikiproject biography' ) {
+				} else if ( templateNames[ tplIdx ] === 'উইকিপ্রকল্প জীবনী' ) {
 					alreadyHasWPBio = true;
 				} else {
 					otherTemplates.push( templateNames[ tplIdx ] );
@@ -1482,7 +1480,7 @@
 
 			// If any templates weren't in the WikiProject map, check if they were redirects
 			if ( otherTemplates.length > 0 ) {
-				var titles = otherTemplates.map( function ( n ) { return 'Template:' + n; } );
+				var titles = otherTemplates.map( function ( n ) { return 'টেমপ্লেট:' + n; } );
 				titles = titles.slice( 0, 50 ); // prevent API error by capping max # of titles at 50
 				titles = titles.join( '|' );
 				return AFCH.api.post( {
@@ -1494,12 +1492,12 @@
 					if ( data.query && data.query.redirects && data.query.redirects.length > 0 ) {
 						var redirs = data.query.redirects;
 						for ( var redirIdx = 0; redirIdx < redirs.length; redirIdx++ ) {
-							var redir = redirs[ redirIdx ].to.substring( 'Template:'.length ).toLowerCase();
-							var originalName = redirs[ redirIdx ].from.substring( 'Template:'.length );
+							var redir = redirs[ redirIdx ].to.substring( 'টেমপ্লেট:'.length ).toLowerCase();
+							var originalName = redirs[ redirIdx ].from.substring( 'টেমপ্লেট:'.length );
 							if ( wikiProjectMap.hasOwnProperty( redir ) ) {
 								wikiProjectMap[ redir ].alreadyOnPage = true;
 								wikiProjectMap[ redir ].realTemplateName = originalName;
-							} else if ( redir === 'wikiproject biography' ) {
+							} else if ( redir === 'উইকিপ্রকল্প জীবনী' ) {
 								alreadyHasWPBio = true;
 								existingWPBioTemplateName = originalName;
 							}
@@ -1554,7 +1552,7 @@
 					allow_single_deselect: true,
 					disable_search: true,
 					width: '140px',
-					placeholder_text_single: 'Click to select'
+					placeholder_text_single: 'নির্বাচন করতে ক্লিক করুন'
 				} );
 
 				// If draft is assessed as stub, show stub sorting
@@ -1568,27 +1566,6 @@
 							return;
 						}
 
-						if ( $afch.find( '#stubSorterContainer' ).html() === '' ) {
-							mw.hook( 'StubSorter_activate' ).fire( $afch.find( '#stubSorterContainer' ) );
-							var promise = $.when();
-							var wasStubSorterActivated = $afch.find( '#stubSorterContainer' ).html() !== '';
-							if ( !wasStubSorterActivated ) {
-								promise = mw.loader.getScript( 'https://en.wikipedia.org/w/index.php?title=User:SD0001/StubSorter.js&action=raw&ctype=text/javascript' );
-							}
-
-							promise.then( function () {
-								if ( !wasStubSorterActivated ) {
-									mw.hook( 'StubSorter_activate' ).fire( $afch.find( '#stubSorterContainer' ) );
-								}
-
-								$( '#stub_sorter_select_chosen' ).css( 'width', '' );
-								$( '#stub-sorter-select' ).addClass( 'afch-input' );
-
-								if ( /\{\{[^{ ]*[sS]tub(\|.*?)?\}\}\s*/.test( pageText ) ) {
-									$afch.find( '#newAssessment' ).val( 'stub' ).trigger( 'chosen:updated' ).trigger( 'change' );
-								}
-							} );
-						}
 					}
 				} );
 
@@ -1729,7 +1706,7 @@
 					$status.text( '' );
 					$submitButton
 						.removeClass( 'disabled' )
-						.text( 'Accept & publish' );
+						.text( 'গ্রহণ এবং প্রকাশ করুন' );
 
 					// If there is no value, die now, because otherwise mw.Title
 					// will throw an exception due to an invalid title
@@ -1741,10 +1718,10 @@
 
 					AFCH.api.get( {
 						action: 'query',
-						titles: 'Talk:' + page.rawTitle
+						titles: 'আলাপ:' + page.rawTitle
 					} ).done( function ( data ) {
 						if ( !data.query.pages.hasOwnProperty( '-1' ) ) {
-							$status.html( 'The talk page for "' + linkToPage + '" exists.' );
+							$status.html( '"' + linkToPage + '" এর আলাপ পাতা ইতিমধ্যেই রয়েছে' );
 						}
 					} );
 
@@ -1862,7 +1839,7 @@
 
 				$reasons = $afch.find( '#declineReason' );
 				$commonSection = $( '<optgroup>' )
-					.attr( 'label', 'Frequently used' )
+					.attr( 'label', 'প্রায়শই ব্যবহৃত' )
 					.insertBefore( $reasons.find( 'optgroup' ).first() );
 
 				// Show the 5 most used options
@@ -1883,7 +1860,7 @@
 
 			// Set up jquery.chosen for the reject reason
 			$afch.find( '#rejectReason' ).chosen( {
-				placeholder_text_single: 'Select a reject reason...',
+				placeholder_text_single: 'প্রত্যাখ্যানের কারণ বলুন...',
 				search_contains: true,
 				inherit_select_classes: true,
 				max_selected_options: 2
@@ -1921,7 +1898,7 @@
 							} );
 
 							// Check if there's an OTRS notice
-							new AFCH.Page( 'Draft talk:' + afchSubmission.shortTitle ).getText( /* usecache */ false ).done( function ( text ) {
+							new AFCH.Page( 'খসড়া আলাপ:' + afchSubmission.shortTitle ).getText( /* usecache */ false ).done( function ( text ) {
 								if ( /ConfirmationOTRS/.test( text ) ) {
 									$afch.find( '#declineInputWrapper' ).append(
 										$( '<div>' )
@@ -2028,10 +2005,10 @@
 							.html( Array.prototype.slice.call( arguments )
 								.join( '<hr />' ) );
 					} );
-					this.textContent = '(hide preview)';
+					this.textContent = '(প্রাকদর্শন লুকান)';
 				} else {
 					$( '#previewContainer' ).empty();
-					this.textContent = '(preview)';
+					this.textContent = '(প্রাকদর্শন)';
 				}
 			} );
 
@@ -2110,7 +2087,7 @@
 		$.each( afchSubmission.submitters, function ( index, submitter ) {
 			customSubmitters.push( {
 				name: submitter,
-				description: submitter + ( index === 0 ? ' (most recent submitter)' : ' (past submitter)' ),
+				description: submitter + ( index === 0 ? ' (সাম্প্রতিক জমাদানকারী)' : ' (অতীতে জমাদানকারী)' ),
 				selected: index === 0
 			} );
 		} );
@@ -2159,10 +2136,10 @@
 					// Check if the user string starts with "User:", because Template:AFC submission dies horribly if it does
 					if ( submitter.lastIndexOf( 'User:', 0 ) === 0 ) {
 						field.addClass( 'bad-input' );
-						status.text( 'Remove "User:" from the beginning.' );
+						status.text( 'শুরু থেকে "ব্যবহারকারী:" সরান।' );
 						submitButton
 							.addClass( 'disabled' )
-							.text( 'Invalid user name' );
+							.text( 'ভূল ব্যবহারকারী নাম' );
 						return;
 					}
 
@@ -2272,16 +2249,16 @@
 					// Add biography banner if specified
 					if ( data.isBiography ) {
 						// Ensure we don't have duplicate biography tags
-						AFCH.removeFromArray( data.newWikiProjects, 'WikiProject Biography' );
+						AFCH.removeFromArray( data.newWikiProjects, 'উইকিপ্রকল্প জীবনী' );
 
-						talkTextPrefix += ( '\n{{WikiProject Biography|living=' +
+						talkTextPrefix += ( '\n{{উইকিপ্রকল্প জীবনী|living=' +
 							( data.lifeStatus !== 'unknown' ? ( data.lifeStatus === 'living' ? 'yes' : 'no' ) : '' ) +
 							'|class=' + data.newAssessment + '|listas=' + data.subjectName + '}}' );
 					}
 
 					if ( data.newAssessment === 'disambig' &&
-						$.inArray( 'WikiProject Disambiguation', data.newWikiProjects ) === -1 ) {
-						data.newWikiProjects.push( 'WikiProject Disambiguation' );
+						$.inArray( 'উইকিপ্রকল্প দ্ব্যর্থতা নিরসন', data.newWikiProjects ) === -1 ) {
+						data.newWikiProjects.push( 'উইকিপ্রকল্প দ্ব্যর্থতা নিরসন' );
 					}
 
 					// Add and remove WikiProjects
@@ -2298,7 +2275,7 @@
 						return templateObj.realTemplateName || templateObj.templateName;
 					} );
 					if ( data.alreadyHasWPBio && !data.isBiography ) {
-						wikiProjectsToRemove.push( data.existingWPBioTemplateName || 'wikiproject biography' );
+						wikiProjectsToRemove.push( data.existingWPBioTemplateName || 'উইকিপ্রকল্প জীবনী' );
 					}
 
 					$.each( wikiProjectsToAdd, function ( _index, templateName ) {
@@ -2314,7 +2291,7 @@
 					// (e.g. pages in `খসড়া:` namespace with discussion)
 					talkText = talkTextPrefix + '\n\n' + talkText;
 
-					var summary = 'Placing [[Wikipedia:Articles for creation|Articles for creation]] banner';
+					var summary = '[[Wikipedia:খসড়া প্রণয়ন|খসড়া প্রনয়ন ব্যানার স্থাপন]] banner';
 					if ( wikiProjectsToAdd.length > 0 ) {
 						summary += ', adding ' + wikiProjectsToAdd.length +
 							' WikiProject banner' + ( ( wikiProjectsToAdd.length === 1 ) ? '' : 's' );
