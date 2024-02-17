@@ -12,7 +12,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "lint": "grunt lint --fix"
+    "lint": "grunt lint",
+    "build": "grunt build"
   },
   "dependencies": {
     "hogan.js": "^3.0.2"

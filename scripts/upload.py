@@ -52,9 +52,9 @@ else:
 # Shortname of the wiki target
 wiki = sys.argv[1]
 
-if wiki not in ('en', 'test'):
-	print('Error: unrecognized wiki "{}". Must be "en" or "test".'.format(wiki))
-	sys.exit(1)
+# if wiki not in ('en', 'test'):
+# 	print('Error: unrecognized wiki "{}". Must be "en" or "test".'.format(wiki))
+# 	sys.exit(1)
 
 # Base page name on-wiki
 root = sys.argv[2]
@@ -64,7 +64,7 @@ if root.endswith('.js'):
     sys.exit(1)
 
 # First, create a build
-command = 'grunt build'
+command = 'npm run build'
 
 # Should we use --force on grunt build?
 if '--force' in sys.argv:
@@ -94,10 +94,10 @@ def stripFirstLine(text):
 
 # Which of the two bot libraries are we using to write our edits?
 if using_mwclient:
-	if wiki == 'en':
+	if False and wiki == 'en':
 		server_name = 'en.wikipedia.org'
 	else:
-		server_name = 'test.wikipedia.org'
+		server_name = 'bnwiki.miraheze.org'
 	site = mwclient.Site(server_name)
 	site.login(username, getpass.getpass('Password for {} on {}: '.format(username, server_name)))
 	print('Logged in as {}.'.format(site.username))

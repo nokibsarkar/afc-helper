@@ -194,7 +194,7 @@
 
 			if ( AFCH.consts.beta ) {
 				// Load minified css
-				mw.loader.load( AFCH.consts.scriptpath + '?action=raw&ctype=text/css&title=ব্যবহারকারী:Nokib Sarkar/Gadget-afchelper.css', 'text/css' );
+				mw.loader.load( AFCH.consts.scriptpath + '?action=raw&ctype=text/css&title=MediaWiki:Gadget-afchelper.css', 'text/css' );
 				promise = mw.loader.using( [
 					'jquery.chosen',
 					'jquery.spinner',

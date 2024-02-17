@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////
 
 ( function ( mw, importScript ) {
-	if ( /^(?:User:|Draft:|Wikipedia(?:_talk)?:Articles_for_creation)/.test( mw.config.get( 'wgPageName' ) ) ) {
+	if ( /^(?:User:|খসড়া:|Wikipedia(?:_talk)?:Articles_for_creation)/.test( mw.config.get( 'wgPageName' ) ) ) {
 		importScript( 'MediaWiki:Gadget-afchelper.js' );
 	}
 }( mediaWiki, importScript ) );

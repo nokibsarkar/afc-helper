@@ -41,7 +41,7 @@ setPageTitle = function ( title ) {
 		if ( requested === 'wgPageName' ) {
 			return title;
 		} else if ( requested === 'wgNamespaceNumber' ) {
-			if ( title.indexOf( 'Draft:' ) === 0 ) {
+			if ( title.indexOf( 'খসড়া:' ) === 0 ) {
 				return 118;
 			}
 		}
@@ -59,6 +59,6 @@ resetToBase();
 
 resetToAFCApplicablePage = function () {
 	resetToBase();
-	setPageTitle( 'Draft:Foo' );
+	setPageTitle( 'খসড়া:Foo' );
 	requireScript( 'afch.js' );
 };

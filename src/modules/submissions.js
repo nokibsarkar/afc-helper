@@ -834,7 +834,7 @@
 			afchViews = new AFCH.Views( data );
 			afchViewer = new AFCH.Viewer( afchViews, $afchWrapper );
 		} );
-
+		console.log( 'setupReviewPanel' );
 		afchPage = new AFCH.Page( AFCH.consts.pagename );
 		afchSubmission = new AFCH.Submission( afchPage );
 
@@ -2311,7 +2311,7 @@
 					} );
 
 					// We prepend the text so that talk page content is not removed
-					// (e.g. pages in `Draft:` namespace with discussion)
+					// (e.g. pages in `খসড়া:` namespace with discussion)
 					talkText = talkTextPrefix + '\n\n' + talkText;
 
 					var summary = 'Placing [[Wikipedia:Articles for creation|Articles for creation]] banner';

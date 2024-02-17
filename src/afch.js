@@ -33,7 +33,8 @@
 	// script at scripts/upload.py doesn't break.
 	AFCH.consts.beta = true;
 	AFCH.consts.baseurl = AFCH.consts.scriptpath +
-		'?action=raw&ctype=text/javascript&title=ব্যবহারকারী:Nokib Sarkar/Gadget-afchelper.js';
+		'?action=raw&ctype=text/javascript&title=MediaWiki:Gadget-afchelper.js';
+	AFCH.consts.whitelistRequired = false;
 
 	$.getScript( AFCH.consts.baseurl + '/core.js' ).done( function () {
 		var loaded = AFCH.load( 'submissions' ); // perhaps eventually there will be more modules besides just 'submissions'
