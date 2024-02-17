@@ -1093,7 +1093,7 @@
 				}
 
 				addWarning( reviewer + ( afchSubmission.params.reviewts ?
-					 AFCH.relativeTimeSince( afchSubmission.params.reviewts ) + ' পূর্ব থেকেই এই খসড়াটি নিরীক্ষা শুরু করেছেন':
+					AFCH.relativeTimeSince( afchSubmission.params.reviewts ) + ' পূর্ব থেকেই এই খসড়াটি নিরীক্ষা শুরু করেছেন' :
 					' ইতিমধ্যেই নিরীক্ষা শুরু করেছেন' ) + '।',
 				isOwnReview ? 'নিরীক্ষামান অবস্থা হতে সরান' : 'পাতার ইতিহাস দেখুন',
 				isOwnReview ? function () {
@@ -1133,7 +1133,7 @@
 
 						// Now change the "View comment" link to behave as a normal toggle for .long-comments
 						AFCH.makeToggle( '.long-comment-toggle', '.long-comments',
-						'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেস্খুন', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'লুকান' );
+							'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেস্খুন', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'লুকান' );
 
 						return false;
 					} );
@@ -1566,27 +1566,6 @@
 							return;
 						}
 
-						// if ( $afch.find( '#stubSorterContainer' ).html() === '' ) {
-						// 	mw.hook( 'StubSorter_activate' ).fire( $afch.find( '#stubSorterContainer' ) );
-						// 	var promise = $.when();
-						// 	var wasStubSorterActivated = $afch.find( '#stubSorterContainer' ).html() !== '';
-						// 	if ( !wasStubSorterActivated ) {
-						// 		promise = mw.loader.getScript( 'https://en.wikipedia.org/w/index.php?title=User:SD0001/StubSorter.js&action=raw&ctype=text/javascript' );
-						// 	}
-
-						// 	promise.then( function () {
-						// 		if ( !wasStubSorterActivated ) {
-						// 			mw.hook( 'StubSorter_activate' ).fire( $afch.find( '#stubSorterContainer' ) );
-						// 		}
-
-						// 		$( '#stub_sorter_select_chosen' ).css( 'width', '' );
-						// 		$( '#stub-sorter-select' ).addClass( 'afch-input' );
-
-						// 		if ( /\{\{[^{ ]*[sS]tub(\|.*?)?\}\}\s*/.test( pageText ) ) {
-						// 			$afch.find( '#newAssessment' ).val( 'stub' ).trigger( 'chosen:updated' ).trigger( 'change' );
-						// 		}
-						// 	} );
-						// }
 					}
 				} );
 
