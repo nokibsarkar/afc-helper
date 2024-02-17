@@ -122,7 +122,7 @@
 					userSysop = $.inArray( 'sysop', mw.config.get( 'wgUserGroups' ) ) > -1,
 					userNPP = $.inArray( 'patroller', mw.config.get( 'wgUserGroups' ) ) > -1,
 					userOnWhitelist = ( new RegExp( '\\|\\s*' + sanitizedUser + '\\s*}' ) ).test( text ),
-					userAllowed = userOnWhitelist || userSysop || userNPP;
+					userAllowed = true || userOnWhitelist || userSysop || userNPP; // বাংলা উইকিতে দরকার নেই।
 
 				if ( !userAllowed ) {
 
@@ -152,7 +152,7 @@
 					// offer links for easy access.
 					} else {
 						$howToDisable = $( '<span>' )
-							.append( 'আপনি যদি সাহায্যকারী স্ক্রিপ্টটি বন্ধ করতে চান, সেক্ষেত্রে আপনি নিজের হাতে আপনার ')
+							.append( 'আপনি যদি সাহায্যকারী স্ক্রিপ্টটি বন্ধ করতে চান, সেক্ষেত্রে আপনি নিজের হাতে আপনার ' )
 							.append( AFCH.makeLinkElementToPage( 'Special:MyPage/common.js', 'common.js' ) )
 							.append( ' অথবা ' )
 							.append( AFCH.makeLinkElementToPage( 'Special:MyPage/skin.js', 'skin.js' ) )
@@ -185,7 +185,7 @@
 		 * @param {string} type Which type of script to load:
 		 *                      'redirects' or 'ffu' or 'submissions'
 		 */
-		load: function ( type ) {
+		load: function ( type ) {	
 			if ( !AFCH.setup() ) {
 				return false;
 			}
@@ -194,7 +194,7 @@
 
 			if ( AFCH.consts.beta ) {
 				// Load minified css
-				mw.loader.load( AFCH.consts.scriptpath + '?action=raw&ctype=text/css&title=MediaWiki:Gadget-afch.css', 'text/css' );
+				mw.loader.load( AFCH.consts.scriptpath + '?action=raw&ctype=text/css&title=ব্যবহারকারী:Nokib Sarkar/Gadget-afchelper.css', 'text/css' );
 				promise = mw.loader.using( [
 					'jquery.chosen',
 					'jquery.spinner',
@@ -205,7 +205,6 @@
 					'mediawiki.user'
 				] );
 			}
-
 			// And finally load the subscript
 			promise.then( function () {
 				$.getScript( AFCH.consts.baseurl + '/' + type + '.js' );
@@ -232,7 +231,7 @@
 				.addClass( 'feedback-link link' )
 				.click( function () {
 					feedback.launch( {
-						subject: ( type ? type + 'ব্যাপারে মতামত': 'AFCH feedback' )
+						subject: ( type ? type + 'ব্যাপারে মতামত' : 'AFCH feedback' )
 					} );
 				} )
 				.appendTo( $element );
@@ -878,7 +877,7 @@
 					logPage.edit( {
 						contents: header + action + title + declineReason + byUser + sig,
 						mode: 'appendtext',
-						summary:   '[[' + options.title + ']]-এর ' + options.actionType + ' লগ করা হচ্ছে' ,
+						summary: '[[' + options.title + ']]-এর ' + options.actionType + ' লগ করা হচ্ছে',
 						statusText: options.actionType + ' -এ লগ করা হচ্ছে'
 					} ).done( function ( data ) {
 						deferred.resolve( data );
@@ -1815,7 +1814,7 @@
 		getReason: function ( code ) {
 			var deferred = $.Deferred();
 
-			$.post( 'https://en.wikipedia.org/api/rest_v1/transform/wikitext/to/html',
+			$.post( 'https://bn.wikipedia.org/api/rest_v1/transform/wikitext/to/html',
 				'wikitext={{AFC submission/comments|' + code + '}}&body_only=true',
 				function ( data ) {
 					deferred.resolve( data );
