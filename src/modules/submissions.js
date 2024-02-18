@@ -504,6 +504,7 @@
 				'Please don\'t change anything and press save',
 				'Carry on from here, and delete this comment.',
 				'Please leave this line alone!',
+				'এই লাইনটি সরাবেন না[!।]?',
 				'Important, do not remove this line before (template|article) has been created.',
 				'Just press the "Save page" button below without changing anything! Doing so will submit your article submission for review. ' +
 					'Once you have saved this page you will find a new yellow \'Review waiting\' box at the bottom of your submission page. ' +
@@ -577,7 +578,7 @@
 		text = text.replace( /[ \t]*(<\s*ref\s*(name\s*=|group\s*=)*\s*.*[^\/]+>)[ \t]*$/gim, '$1' );
 
 		// Move punctuation before <ref> tags
-		text = text.replace( /\s*((<\s*ref\s*(name\s*=|group\s*=)*\s*.*[\/]{1}>)|(<\s*ref\s*(name\s*=|group\s*=)*\s*[^\/]*>(?:<[^<\>]*\>|[^><])*<\/\s*ref\s*\>))[ \t]*([.!?,;:])+$/gim, '$6$1' );
+		text = text.replace( /\s*((<\s*ref\s*(name\s*=|group\s*=)*\s*.*[\/]{1}>)|(<\s*ref\s*(name\s*=|group\s*=)*\s*[^\/]*>(?:<[^<\>]*\>|[^><])*<\/\s*ref\s*\>))[ \t]*([.!?,;:।])+$/gim, '$6$1' );
 
 		// Replace {{http://example.com/foo}} with "* http://example.com/foo" (common newbie error)
 		text = text.replace( /\n\{\{(http[s]?|ftp[s]?|irc|gopher|telnet)\:\/\/(.*?)\}\}/gi, '\n* $1://$3' );
