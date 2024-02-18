@@ -2315,7 +2315,7 @@
 						AFCH.actions.notifyUser( submitter, {
 							message: AFCH.msg.get( 'accepted-submission',
 								{ $1: newPage, $2: data.newAssessment } ),
-							summary: 'Notification: Your [[Wikipedia:Articles for creation|Articles for creation]] submission has been accepted'
+							summary: 'বিজ্ঞপ্তি: আপনার [[উইকিপিডিয়া:নিবন্ধ সৃষ্টির প্রস্তাবনা|নিবন্ধ সৃষ্টির জন্য]] উপস্থাপন গ্রহণ করা হয়েছে'
 						} );
 					} );
 				}
@@ -2549,7 +2549,7 @@
 
 					AFCH.actions.notifyUser( submitter, {
 						message: message,
-						summary: 'Notification: Your [[' + AFCH.consts.pagename + '|Articles for Creation submission]] has been ' + ( isDecline ? 'declined' : 'rejected' )
+						summary: 'বিজ্ঞপ্তি: আপনার [[' + AFCH.consts.pagename + '|নিবন্ধ সৃষ্টির জন্য উপস্থাপন]] ' + ( isDecline ? 'গ্রহণ করা হয়েছে' : 'প্রত্যাখ্যান করা হয়েছে' )
 					} );
 				} );
 			} );
@@ -2595,7 +2595,7 @@
 				AFCH.actions.notifyUser( submitter, {
 					message: AFCH.msg.get( 'comment-on-submission',
 						{ $1: AFCH.consts.pagename } ),
-					summary: 'Notification: I\'ve commented on [[' + AFCH.consts.pagename + '|your Articles for Creation submission]]'
+					summary: 'বিজ্ঞপ্তি: আমি [[' + AFCH.consts.pagename + '|আপনার নিবন্ধ সৃষ্টির জন্য উপস্থাপনে]] একটি মন্তব্য যোগ করেছি'
 				} );
 			} );
 		}

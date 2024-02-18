@@ -68,7 +68,7 @@
 		</div>
 
 		<div id="assessmentWrapper">
-			<label for="newAssessment" class="afch-label">Article assessment</label>
+			<label for="newAssessment" class="afch-label">নিবন্ধ মূল্যায়ন</label>
 			<select id="newAssessment" class="afch-input">
 				<option value="" selected></option>
 				<option value="B">B-class</option>
@@ -107,7 +107,7 @@
 		{{/hasWikiProjects}}
 
 		<div id="categoryWrapper">
-			<label for="newCategories" class="afch-label">Add categories</label>
+			<label for="newCategories" class="afch-label">বিষয়শ্রেণী যোগ করুন</label>
 			<select id="newCategories" class="afch-input" multiple>
 				{{#categories}}
 				<option value="{{.}}" selected>{{.}}</option>
@@ -116,7 +116,7 @@
 		</div>
 
 		<div id="isBiographyWrapper">
-			<label for="isBiography" class="afch-label">Is the article a biography?</label>
+			<label for="isBiography" class="afch-label">নিবন্ধটি কি জীবনী?</label>
 			<input type="checkbox" id="isBiography" class="afch-input"/>
 		</div>
 
@@ -133,18 +133,18 @@
 			</div>
 
 			<div id="lifeStatusWrapper">
-				<label for="lifeStatus" class="afch-label">Is the subject alive?</label>
+				<label for="lifeStatus" class="afch-label">ব্যক্তি কী জীবিত?</label>
 				<select id="lifeStatus" class="afch-input">
-					<option value="unknown" selected>Unknown</option>
-					<option value="living">Living</option>
-					<option value="dead">Dead</option>
+					<option value="unknown" selected>অজানা</option>
+					<option value="living">জীবিত</option>
+					<option value="dead">মৃত</option>
 				</select>
 			</div>
 
 			<div id="deathWrapper" class="hidden">
 
 				<div id="deathYearWrapper">
-					<label for="deathYear" class="afch-label">Year of death</label>
+					<label for="deathYear" class="afch-label">মৃত্যুর বছর</label>
 					<input type="text" id="deathYear" class="afch-input afch-textfield" placeholder="1999"/>
 				</div>
 
@@ -154,17 +154,17 @@
 
 		{{#showPatrolOption}}
 		<div id="patrolPageWrapper">
-			<label for="patrolPage" class="afch-label">Mark page as patrolled</label>
+			<label for="patrolPage" class="afch-label">টহল দানকৃত হিসাবে চিহ্নিত করুন</label>
 			<input type="checkbox" id="patrolPage" class="afch-input"/>
 		</div>
 		{{/showPatrolOption}}
 
 		<div id="notifyWrapper">
-			<label for="notifyUser" class="afch-label">Notify submitter</label>
+			<label for="notifyUser" class="afch-label">জমাদানকারীকে বিজ্ঞপ্তি দিন</label>
 			<input type="checkbox" id="notifyUser" class="afch-input" checked/>
 		</div>
 
-		<div id="afchSubmitForm" data-running="Accepting submission..." class="gradient-button accept">Accept &amp; publish</div>
+		<div id="afchSubmitForm" data-running="Accepting submission..." class="gradient-button accept">গ্রহণ ও প্রকাশ করুন</div>
 
 	</div>
 </div>
@@ -172,15 +172,15 @@
 
 <!-- decline -->
 <div class="review-panel decline">
-	<div class="header">Declining...</div>
+	<div class="header">প্রত্যাখ্যান করা হচ্ছে...</div>
 	<div id="afchContent" class="content centered">
 
 		<fieldset id="declineRejectWrapper" class="radioContainer afch-input" name="declineReject">
 			<input type="radio" id="declineRejectDecline" name="declineReject" value="decline" checked />
-			<label for="declineRejectDecline"><b>Decline</b> (for later improvement &amp; resubmission)</label>
+			<label for="declineRejectDecline"><b>প্রত্যাখ্যান</b> (পরবর্তী উন্নতি ও জমাদানের জন্য)</label>
 			&emsp;
 			<input type="radio" id="declineRejectReject" name="declineReject" value="reject" />
-			<label for="declineRejectReject"><b>Reject</b> (unsuitable topic; no option to resubmit)</label>
+			<label for="declineRejectReject"><b>প্রত্যাখ্যান</b> (অনুপযুক্ত বিষয়; পুনরায় জমা দেওয়া যাবে না)</label>
 		</fieldset>
 
 		<div id="declineReasonWrapper">
@@ -307,11 +307,11 @@
 
 <!-- comment -->
 <div class="review-panel comment">
-	<div class="header">Commenting...</div>
+	<div class="header">মন্তব্য করা হচ্ছে...</div>
 	<div id="afchContent" class="content centered">
 
 		<textarea id="commentText" class="afch-input afch-textfield afch-textarea"
-			placeholder="Enter your comment about the submission using wikicode syntax. Your signature will be added automatically."
+			placeholder="উইকিকোড সিনট্যাক্স ব্যবহার করে আপনার মন্তব্য লিখুন। আপনার স্বাক্ষর স্বয়ংক্রিয়ভাবে যুক্ত হবে।"
 			cols="100" rows="5"></textarea>
 
 		<div id="commentPreview"></div>
@@ -321,7 +321,7 @@
 		<label for="notifyUser" class="afch-label">Notify submitter</label>
 	</div>
 
-		<div id="afchSubmitForm" data-running="Commenting on submission..." class="gradient-button button-centered comment">Post comment</div>
+		<div id="afchSubmitForm" data-running="Commenting on submission..." class="gradient-button button-centered comment">মন্তব্য পোস্ট করুন</div>
 
 	</div>
 </div>
