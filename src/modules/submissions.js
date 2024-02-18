@@ -566,10 +566,10 @@
 		text = text.replace( /== Request review at \[\[WP:AFC\]\] ==/gi, '' );
 
 		// Remove sandbox templates
-		text = text.replace( /\{\{(userspacedraft|userspace draft|user sandbox|Please leave this line alone \(sandbox heading\))(?:\{\{[^{}]*\}\}|[^}{])*\}\}/ig, '' );
+		text = text.replace( /\{\{(userspacedraft|userspace draft|user sandbox|ব্যবহারকারী খেলাঘর|Please leave this line alone \(sandbox heading\))(?:\{\{[^{}]*\}\}|[^}{])*\}\}/ig, '' );
 
 		// Remove html comments (<!--) that surround categories
-		text = text.replace( /<!--\s*((\[\[:{0,1}(Category:.*?)\]\]\s*)+)-->/gi, '$1' );
+		text = text.replace( /<!--\s*((\[\[:{0,1}((?:[C]ategory|বিষয়শ্রেণী):.*?)\]\]\s*)+)-->/gi, '$1' );
 
 		// Remove spaces/commas between <ref> tags
 		text = text.replace( /\s*(<\/\s*ref\s*\>)\s*[,]*\s*(<\s*ref\s*(name\s*=|group\s*=)*\s*[^\/]*>)[ \t]*$/gim, '$1$2' );
@@ -632,7 +632,7 @@
 		// working on a patch for that, actually).
 		this.text = this.text.replace( new RegExp( '\\{\\{\\s*afc submission\\s*(?:\\||[^{{}}]*|{{.*?}})*?\\}\\}' +
 			// Also remove the AFCH-generated warning message, since if necessary the script will add it again
-			'( <!-- Do not remove this line! -->)?', 'gi' ), '' );
+			'( <!-- এই লাইনটি সরাবেন না! -->)?', 'gi' ), '' );
 
 		// Nastiest hack of all time. As above, Parsoid would be great. Gotta wire it up asynchronously first, though.
 		this.text = this.text.replace( /\{\{\s*afc comment[\s\S]+?\(UTC\)\}\}/gi, '' );
