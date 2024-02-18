@@ -71,17 +71,17 @@
 			<label for="newAssessment" class="afch-label">নিবন্ধ মূল্যায়ন</label>
 			<select id="newAssessment" class="afch-input">
 				<option value="" selected></option>
-				<option value="B">B-class</option>
-				<option value="C">C-class</option>
-				<option value="start">Start-class</option>
-				<option value="stub">Stub-class</option>
-				<option value="list">List-class</option>
-				<option value="disambig">Disambig-class</option>
-				<option value="template">Template-class</option>
-				<option value="redirect">Redirect-class</option>
-				<option value="portal">Portal-class</option>
-				<option value="project">Project-class</option>
-				<option value="na">NA-class</option>
+				<option value="B">দ্বিতীয় শ্রেণী</option>
+				<option value="C">তৃতীয় শ্রেণী</option>
+				<option value="start">প্রারম্ভিক</option>
+				<option value="stub">অসম্পূর্ণ</option>
+				<option value="list">তালিকা নিবন্ধ</option>
+				<option value="disambig">দ্ব্যর্থতা নিরসন</option>
+				<option value="template">টেমপ্লেট</option>
+				<option value="redirect">পূনর্নির্দেশ</option>
+				<option value="portal">প্রবেশদ্বার</option>
+				<option value="project">উইকিপ্রকল্প</option>
+				<option value="na">প্রযোজ্য নয়</option>
 			</select>
 		</div>
 
@@ -91,16 +91,16 @@
 		</div> -->
 
 		<div id="stubSorterWrapper" class="hidden">
-			<label class="afch-label" for="stub-sorter-select">Add stub tag</label>
+			<label class="afch-label" for="stub-sorter-select">অসম্পূর্ণ ট্যাগ যুক্ত করুন</label>
 			<div id="stubSorterContainer"></div>
 		</div>
 
 		{{#hasWikiProjects}}
 		<div id="wikiProjectWrapper">
-			<label for="newWikiProjects" class="afch-label">Add WikiProjects</label>
+			<label for="newWikiProjects" class="afch-label">উইকিপ্রকল্প যুক্ত করুন</label>
 			<select id="newWikiProjects" class="afch-input" multiple>
 				{{#wikiProjects}}
-				<option value="{{templateName}}" {{#alreadyOnPage}} selected {{/alreadyOnPage}}>{{displayName}}</option>
+				<option value="{{templateName}}" {{#alreadyOnPage}} বাছাইকৃত {{/alreadyOnPage}}>{{displayName}}</option>
 				{{/wikiProjects}}
 			</select>
 		</div>
@@ -123,13 +123,13 @@
 		<div id="bioOptionsWrapper" class="hidden">
 
 			<div id="subjectNameWrapper">
-				<label for="subjectName" class="afch-label">Subject name (last, first)</label>
-				<input type="text" id="subjectName" class="afch-input afch-textfield" placeholder="Magellan, Ferdinand"/>
+				<label for="subjectName" class="afch-label">ব্যক্তির নাম</label>
+				<input type="text" id="subjectName" class="afch-input afch-textfield" placeholder="নকীব সরকার"/>
 			</div>
 
 			<div id="birthYearWrapper">
-				<label for="birthYear" class="afch-label">Year of birth</label>
-				<input type="text" id="birthYear" class="afch-input afch-textfield" placeholder="1901"/>
+				<label for="birthYear" class="afch-label">জন্মসাল</label>
+				<input type="text" id="birthYear" class="afch-input afch-textfield" placeholder="২০০১"/>
 			</div>
 
 			<div id="lifeStatusWrapper">
@@ -164,7 +164,7 @@
 			<input type="checkbox" id="notifyUser" class="afch-input" checked/>
 		</div>
 
-		<div id="afchSubmitForm" data-running="Accepting submission..." class="gradient-button accept">গ্রহণ ও প্রকাশ করুন</div>
+		<div id="afchSubmitForm" data-running="খসড়া গ্রহণ করা হচ্ছে..." class="gradient-button accept">গ্রহণ ও প্রকাশ করুন</div>
 
 	</div>
 </div>
@@ -186,24 +186,24 @@
 		<div id="declineReasonWrapper">
 			<select id="declineReason" class="afch-input text-left" multiple="multiple">
 				<option value=""></option>
-				<optgroup label="Notability">
-					<option value="neo">neo - Submission is about a neologism not yet shown to meet notability guidelines</option>
-					<option value="web">web - Submission is about web content not yet shown to meet notability guidelines</option>
-					<option value="prof">prof - Submission is about a professor not yet shown to meet notability guidelines</option>
-					<option value="athlete">athlete - Submission is about an athlete not yet shown to meet notability guidelines</option>
-					<option value="music">music - Submission is about a musician or musical work not yet shown to meet notability guidelines</option>
-					<option value="film">film - Submission is about a film not yet shown to meet notability guidelines</option>
-					<option value="book">book - Submission is about a book not yet shown to meet notability guidelines</option>
-					<option value="event">event - Submission is about an event not yet shown to meet notability guidelines</option>
-					<option value="corp">corp - Submission is about a company or organization not yet shown to meet notability guidelines</option>
-					<option value="bio">bio - Submission is about a person not yet shown to meet notability guidelines</option>
-					<option value="nn">nn - Submission is about a topic not yet shown to meet general notability guidelines (be more specific if possible)</option>
+				<optgroup label="উল্লেখযোগ্যতা">
+					<option value="neo">neo - জনপ্রবণতা সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="web">web - ওয়েব সামগ্রী সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="prof">prof - একজন অধ্যাপক সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="athlete">athlete - একজন ক্রীড়ায়ত্ন সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="music">music - একজন সংগীতশিল্পী বা সংগীত কাজ সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="film">film - একটি চলচ্চিত্র সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="book">book - একটি বই সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="event">event - একটি ঘটনা সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="corp">corp - একটি কোম্পানি বা সংগঠন সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="bio">bio - একজন ব্যক্তি সম্পর্কিত জিনিস, যা এখনও উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি</option>
+					<option value="nn">nn - একটি বিষয় সম্পর্কিত জিনিস, যা এখনও সাধারণ উল্লেখযোগ্যতার মানদণ্ড পূরণ করে নি (যদি সম্ভব হয়, তাহলে বিস্তারিতভাবে লিখুন)</option>
 				</optgroup>
-				<optgroup label="Invalid submissions">
-					<option value="blank">blank - Submission is blank</option>
-					<option value="lang">lang - Submission is not in English</option>
-					<option value="test">test - Submission appears to be a test edit</option>
-					<option value="redirect">redirect - Submission is a redirect request</option>
+				<optgroup label="ত্রুটিপূর্ণ খসড়া">
+					<option value="blank">খালি - খসড়াটি খালি</option>
+					<option value="lang">ভাষা - খসড়াটি ইংরেজি নয়</option>
+					<option value="test">পরীক্ষা - খসড়াটি পরীক্ষার সম্পাদনা মনে হচ্ছে</option>
+					<option value="redirect">রিডাইরেক্ট - খসড়াটি রিডাইরেক্ট অনুরোধ</option>
 				</optgroup>
 				<optgroup label="BLP &amp; vandalism">
 					<option value="van">van - Submission is vandalism, a negative unsourced BLP, or an attack page</option>
@@ -211,7 +211,7 @@
 					<option value="blp">blp - BLP contains unsourced, possibly defamatory claims (AGF and wait for sources)</option>
 				</optgroup>
 				<optgroup label="Submission content">
-					<option value="cv">cv - Submission is a copyright violation</option>
+					<option value="cv"></optgroup>cv - Submission is a copyright violation</option>
 					<option value="v">v - Submission is improperly sourced</option>
 					<option value="not">not - Submission fails [[Wikipedia:What Wikipedia is not]]</option>
 					<option value="news">news - Submission appears to be a news story of a single event</option>
@@ -219,7 +219,7 @@
 					<option value="plot">plot - Submission consists mostly of a plot summary</option>
 					<option value="joke">joke - Submission appears to be a joke or hoax</option>
 				</optgroup>
-				<optgroup label="Prose issues">
+				<optgroup label="</optgroup>Prose issues">
 					<option value="essay">essay - Submission reads like an essay</option>
 					<option value="npov">npov - Submission is not written in a formal, neutral encyclopedic tone</option>
 					<option value="adv">adv - Submission reads like an advertisement</option>
@@ -318,10 +318,10 @@
 
 	<div class="afch-option">
 		<input type="checkbox" id="notifyUser" class="afch-input" {{#notifyByDefault}}checked{{/notifyByDefault}} />
-		<label for="notifyUser" class="afch-label">Notify submitter</label>
+		<label for="notifyUser" class="afch-label">জমাদানকারীকে জানান</label>
 	</div>
 
-		<div id="afchSubmitForm" data-running="Commenting on submission..." class="gradient-button button-centered comment">মন্তব্য পোস্ট করুন</div>
+		<div id="afchSubmitForm" data-running="খসড়াটিতে মন্তব্য করা হচ্ছে..." class="gradient-button button-centered comment">মন্তব্য পোস্ট করুন</div>
 
 	</div>
 </div>
