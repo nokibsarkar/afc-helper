@@ -881,7 +881,7 @@
 			// Add feedback and preferences links
 			// FIXME: Feedback temporarily disabled due to https://github.com/WPAFC/afch-rewrite/issues/71
 			// AFCH.initFeedback( $afch.find( 'span.feedback-wrapper' ), '[your topic here]', 'give feedback' );
-			AFCH.preferences.initLink( $afch.find( 'span.preferences-wrapper' ), 'preferences' );
+			AFCH.preferences.initLink( $afch.find( 'span.preferences-wrapper' ), 'পছন্দসমূহ' );
 
 			// Set up click handlers
 			$afch.find( '#afchAccept' ).click( function () { spinnerAndRun( showAcceptOptions ); } );
@@ -1048,8 +1048,8 @@
 					return;
 				}
 
-				addWarning( 'The page "' + afchSubmission.shortTitle + '" has been deleted ' + rawDeletions.length + ( rawDeletions.length === 10 ? '+' : '' ) +
-					' time' + ( rawDeletions.length > 1 ? 's' : '' ) + '.', 'View deletion log', function () {
+				addWarning( 'এই পাতাটি "' + afchSubmission.shortTitle + '" ' + rawDeletions.length + ( rawDeletions.length === 10 ? '+' : '' ) +
+					' বার অপসারিত হয়েছে' + ( rawDeletions.length > 1 ? '' : '' ) + '।', 'অপসারণ লগ দেখুন', function () {
 					var $toggleLink = $( this ).addClass( 'deletion-log-toggle' ),
 						$warningDiv = $toggleLink.parent(),
 						deletions = [];
@@ -1134,7 +1134,7 @@
 
 						// Now change the "View comment" link to behave as a normal toggle for .long-comments
 						AFCH.makeToggle( '.long-comment-toggle', '.long-comments',
-							'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেস্খুন', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'লুকান' );
+							'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'দেখুন', 'মন্তব্য' + ( oneComment ? 'টি' : 'গুলো' ) + 'লুকান' );
 
 						return false;
 					} );
@@ -1270,7 +1270,7 @@
 
 		// Update the button show the `running` text
 		$submitBtn
-			.text( $submitBtn.data( 'running' ) )
+			.text( $submitBtn.data( 'চলছে' ) )
 			.addClass( 'disabled' )
 			.off( 'click' );
 
@@ -1288,7 +1288,7 @@
 	function setupAjaxStopHandler() {
 		$( document ).ajaxStop( function () {
 			$afch.find( '#afchSubmitForm' )
-				.text( 'Done' )
+				.text( 'সম্পন্ন' )
 				.append(
 					' ',
 					$( '<a>' )
@@ -1300,13 +1300,13 @@
 
 			// Show a link to the next random submissions
 			new AFCH.status.Element( 'পরবর্তী $1 অথবা $2 এ চলুন&raquo;', {
-				$1: AFCH.makeLinkElementToCategory( 'Pending AfC submissions', 'random submission' ),
+				$1: AFCH.makeLinkElementToCategory( 'অপেক্ষমাণ উপস্থাপনা', 'অজানা কোনও উপস্থাপনা' ),
 				$2: AFCH.makeLinkElementToCategory( 'AfC pending submissions by age/0 days ago', 'zero-day-old submission' )
 			} );
 
 			// Also, automagically reload the page in place
 			$( '#mw-content-text' ).load( AFCH.consts.pagelink + ' #mw-content-text', function () {
-				$afch.find( '#reloadLink' ).text( '(reloaded automatically)' );
+				$afch.find( '#reloadLink' ).text( '(স্বয়ংক্রিয়ভাবে লোডকৃত)' );
 				// Fire the hook for new page content
 				mw.hook( 'wikipage.content' ).fire( $( '#mw-content-text' ) );
 			} );
@@ -1748,8 +1748,8 @@
 
 						// If the page already exists, display an error
 						if ( !data.query.pages.hasOwnProperty( '-1' ) ) {
-							errorHtml = 'Whoops, the page "' + linkToPage + '" already exists.';
-							buttonText = 'The proposed title already exists';
+							errorHtml = 'ওহও, "' + linkToPage + '" নামে একটি পাতা বিদ্যমান।';
+							buttonText = 'প্রস্তাবিত শিরোনামটি ইতিমধ্যে বিদ্যমান';
 						} else {
 							// If the page doesn't exist but IS create-protected and the
 							// current reviewer is not an admin, also display an error
@@ -1852,7 +1852,7 @@
 
 			// Set up jquery.chosen for the decline reason
 			$afch.find( '#declineReason' ).chosen( {
-				placeholder_text_single: 'Select a decline reason...',
+				placeholder_text_single: 'প্রত্যাখ্যানের কারণ নির্বাচন করুন...',
 				no_results_text: 'Whoops, no reasons matched your search. Type "custom" to add a custom rationale instead.',
 				search_contains: true,
 				inherit_select_classes: true,
@@ -1889,12 +1889,12 @@
 									$( this ).removeClass( 'bad-input' );
 									submitButton
 										.removeClass( 'disabled' )
-										.text( 'Decline submission' );
+										.text( 'উপস্থাপন প্রত্যাখ্যান করন' );
 								} else {
 									$( this ).addClass( 'bad-input' );
 									submitButton
 										.addClass( 'disabled' )
-										.text( 'Please enter between one and three URLs!' );
+										.text( 'দয়া করে এক থেকে সর্বাধিক তিনটি ইউআরএল লিখুন!' );
 								}
 							} );
 
@@ -2103,7 +2103,7 @@
 				$afch.find( '#submitterNameStatus' ).text( '' );
 				$afch.find( '#afchSubmitForm' )
 					.removeClass( 'disabled' )
-					.text( 'Submit' );
+					.text( 'জমা দিন' );
 			}
 
 			// Show the other textbox when `other` is selected in the menu
@@ -2140,7 +2140,7 @@
 						status.text( 'শুরু থেকে "ব্যবহারকারী:" সরান।' );
 						submitButton
 							.addClass( 'disabled' )
-							.text( 'ভূল ব্যবহারকারী নাম' );
+							.text( 'ভুল ব্যবহারকারী নাম' );
 						return;
 					}
 
@@ -2152,10 +2152,10 @@
 					} ).done( function ( data ) {
 						if ( data.query.users[ 0 ].missing !== undefined ) {
 							field.addClass( 'bad-input' );
-							status.text( 'No user named "' + submitter + '".' );
+							status.text( '"' + submitter + '" নামে কোনও ব্যবহারকারী নেই।' );
 							submitButton
 								.addClass( 'disabled' )
-								.text( 'No such user' );
+								.text( 'এই নামে কোনও ব্যবহারকারী নেই' );
 						}
 					} );
 				} );
